@@ -1,0 +1,10 @@
+baseURL = "/"
+languageCode = "ja-jp"
+title = "OnceWorld DB"
+
+disableKinds = ["taxonomy", "term"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

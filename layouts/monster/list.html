@@ -1,0 +1,36 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>画像</th>
+        <th>ID</th>
+        <th>名前</th>
+        <th>属性</th>
+        <th>攻撃タイプ</th>
+        <th>攻撃距離</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range sort .Pages ".Params.id" "asc" }}
+        <tr>
+          <td>
+            {{ with .Params.image }}
+              <img class="thumb" src="/{{ . }}" alt="{{ $.Title }}">
+            {{ else }}
+              <span>-</span>
+            {{ end }}
+          </td>
+          <td>{{ .Params.id }}</td>
+          <td><a href="{{ .RelPermalink }}">{{ .Title }}</a></td>
+          <td>{{ .Params.element }}</td>
+          <td>{{ .Params.attack_type }}</td>
+          <td>{{ .Params.attack_range }}</td>
+        </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ end }}

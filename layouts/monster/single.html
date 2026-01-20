@@ -1,0 +1,75 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+
+{{ with .Params.image }}
+  <p><img class="hero" src="/{{ . }}" alt="{{ $.Title }}"></p>
+{{ end }}
+
+<section>
+  <h2>基本情報</h2>
+  <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><th>属性</th><td>{{ .Params.element }}</td></tr>
+        <tr><th>攻撃タイプ</th><td>{{ .Params.attack_type }}</td></tr>
+        <tr><th>攻撃距離</th><td>{{ .Params.attack_range }}</td></tr>
+        <tr><th>獲得経験値</th><td>{{ .Params.exp }}</td></tr>
+        <tr><th>獲得ゴールド</th><td>{{ .Params.gold }}</td></tr>
+        <tr><th>捕獲率</th><td>{{ .Params.capture_rate }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>ステータス</h2>
+  <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><th>vit</th><td>{{ .Params.status.vit }}</td></tr>
+        <tr><th>spd</th><td>{{ .Params.status.spd }}</td></tr>
+        <tr><th>atk</th><td>{{ .Params.status.atk }}</td></tr>
+        <tr><th>int</th><td>{{ .Params.status.int }}</td></tr>
+        <tr><th>def</th><td>{{ .Params.status.def }}</td></tr>
+        <tr><th>mdef</th><td>{{ .Params.status.mdef }}</td></tr>
+        <tr><th>luk</th><td>{{ .Params.status.luk }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>出現マップ</h2>
+  {{ if .Params.locations }}
+    <ul>
+      {{ range .Params.locations }}
+        <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p>未設定</p>
+  {{ end }}
+</section>
+
+<section>
+  <h2>ドロップ</h2>
+  {{ if .Params.drops }}
+    <ul>
+      {{ range .Params.drops }}
+        <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p>未設定</p>
+  {{ end }}
+</section>
+
+{{ if .Content }}
+<section>
+  <h2>メモ</h2>
+  {{ .Content }}
+</section>
+{{ end }}
+
+<p><a href="/monster/">← 図鑑一覧へ戻る</a></p>
+{{ end }}
