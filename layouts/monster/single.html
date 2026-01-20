@@ -2,7 +2,9 @@
 <h1>{{ .Title }}</h1>
 
 {{ with .Params.image }}
-  <p><img class="hero" src="/{{ . }}" alt="{{ $.Title }}"></p>
+  <p>
+    <img class="hero" src="{{ (print "/" .) | relURL }}" alt="{{ $.Title }}">
+  </p>
 {{ end }}
 
 <section>
@@ -71,5 +73,7 @@
 </section>
 {{ end }}
 
-<p><a href="{{ "/monster/" | relURL }}">← 図鑑一覧へ戻る</a></p>
+<p>
+  <a href="{{ .CurrentSection.RelPermalink }}">← 図鑑一覧へ戻る</a>
+</p>
 {{ end }}
