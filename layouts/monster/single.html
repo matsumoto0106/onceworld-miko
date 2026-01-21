@@ -1,8 +1,12 @@
 {{ define "main" }}
 <h1>{{ .Title }}</h1>
 
+<p style="font-size:12px;color:#666;">
+  debug image: "{{ .Params.image }}"
+</p>
+
 {{ with .Params.image }}
-  {{ $img := (strings.TrimPrefix "/" .) }}
+  {{ $img := strings.TrimPrefix "/" . }}
   <p>
     <img class="hero" src="{{ (print "/" $img) | relURL }}" alt="{{ $.Title }}">
   </p>
