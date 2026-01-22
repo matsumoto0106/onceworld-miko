@@ -10,14 +10,10 @@
         <span class="ref-id">({{ $p.Params.id }})</span>
       </div>
 
-      <div class="ref-thumb">
-        {{ with $p.Params.image }}
-          {{ $img := strings.TrimPrefix "/" . }}
-          <img src="{{ $img | relURL }}" alt="{{ $p.Title }}">
-        {{ else }}
-          <div class="ref-noimg"></div>
-        {{ end }}
-      </div>
+      {{ with $p.Params.image }}
+        {{ $img := strings.TrimPrefix "/" . }}
+        <img class="ref-img" src="{{ $img | relURL }}" alt="{{ $p.Title }}">
+      {{ end }}
     </a>
   {{ end }}
 </div>
