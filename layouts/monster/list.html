@@ -6,8 +6,7 @@
     {{ $p := . }}
     <a class="ref-card" href="{{ $p.RelPermalink }}">
       <div class="ref-head">
-        <span class="ref-name">{{ $p.Title }}</span>
-        <span class="ref-id">({{ $p.Params.id }})</span>
+        <span class="ref-name">{{ $p.Title }} ({{ $p.Params.id }})</span>
       </div>
 
       {{ with $p.Params.image }}
