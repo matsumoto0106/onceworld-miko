@@ -1,80 +1,87 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
+<h1 class="d-title">{{ .Title }}</h1>
 
 {{ with .Params.image }}
   {{ $img := strings.TrimPrefix "/" . }}
-  <p>
-    <img class="hero" src="{{ $img | relURL }}" alt="{{ $.Title }}">
+  <div class="d-hero">
+    <img class="d-hero-img" src="{{ $img | relURL }}" alt="{{ $.Title }}">
+  </div>
+{{ end }}
+
+<p class="d-line">
+  名前：{{ .Title }}（{{ .Params.attack_type }}・{{ .Params.attack_range }}・{{ .Params.element }}）
+</p>
+
+<section class="d-block">
+  <div class="d-level">
+    <div class="d-level-row">
+      {{ with .Params.level_shortcuts }}
+        {{ range . }}
+          <button class="d-btn" type="button" data-lv="{{ . }}">Lv {{ . }}</button>
+        {{ end }}
+      {{ else }}
+        <button class="d-btn" type="button" data-lv="1">Lv 1</button>
+        <button class="d-btn" type="button" data-lv="700">Lv 700</button>
+      {{ end }}
+    </div>
+
+    <div class="d-level-row">
+      <label class="d-input">
+        Lv <input type="number" min="1" value="1">
+      </label>
+    </div>
+  </div>
+</section>
+
+<section class="d-block">
+  <h2 class="d-h2">ステータス</h2>
+
+  <dl class="d-list">
+    <div class="d-row"><dt>vit</dt><dd>{{ .Params.status.vit }}</dd></div>
+    <div class="d-row"><dt>spd</dt><dd>{{ .Params.status.spd }}</dd></div>
+    <div class="d-row"><dt>atk</dt><dd>{{ .Params.status.atk }}</dd></div>
+    <div class="d-row"><dt>int</dt><dd>{{ .Params.status.int }}</dd></div>
+    <div class="d-row"><dt>def</dt><dd>{{ .Params.status.def }}</dd></div>
+    <div class="d-row"><dt>mdef</dt><dd>{{ .Params.status.mdef }}</dd></div>
+    <div class="d-row"><dt>luk</dt><dd>{{ .Params.status.luk }}</dd></div>
+
+    {{ with .Params.fixed_status.mov }}
+      <div class="d-row"><dt>mov</dt><dd>{{ . }}</dd></div>
+    {{ end }}
+  </dl>
+</section>
+
+<section class="d-block">
+  <h2 class="d-h2">報酬・捕獲</h2>
+
+  <dl class="d-list">
+    <div class="d-row"><dt>獲得経験値</dt><dd>{{ .Params.exp }}</dd></div>
+    <div class="d-row"><dt>獲得ゴールド</dt><dd>{{ .Params.gold }}</dd></div>
+    <div class="d-row"><dt>捕獲率</dt><dd>{{ .Params.capture_rate }}</dd></div>
+  </dl>
+</section>
+
+{{ with .Params.drops }}
+<section class="d-block">
+  <h2 class="d-h2">ドロップ</h2>
+  <ul class="d-bullets">
+    {{ range . }}
+      <li>{{ . }}</li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ with .Params.locations }}
+<section class="d-block">
+  <h2 class="d-h2">出現場所</h2>
+  <p class="d-places">
+    {{ range $i, $v := . }}{{ if $i }} / {{ end }}{{ $v }}{{ end }}
   </p>
-{{ end }}
-
-<section>
-  <h2>基本情報</h2>
-  <div class="table-wrap">
-    <table>
-      <tbody>
-        <tr><th>属性</th><td>{{ .Params.element }}</td></tr>
-        <tr><th>攻撃タイプ</th><td>{{ .Params.attack_type }}</td></tr>
-        <tr><th>攻撃距離</th><td>{{ .Params.attack_range }}</td></tr>
-        <tr><th>獲得経験値</th><td>{{ .Params.exp }}</td></tr>
-        <tr><th>獲得ゴールド</th><td>{{ .Params.gold }}</td></tr>
-        <tr><th>捕獲率</th><td>{{ .Params.capture_rate }}</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section>
-  <h2>ステータス</h2>
-  <div class="table-wrap">
-    <table>
-      <tbody>
-        <tr><th>vit</th><td>{{ .Params.status.vit }}</td></tr>
-        <tr><th>spd</th><td>{{ .Params.status.spd }}</td></tr>
-        <tr><th>atk</th><td>{{ .Params.status.atk }}</td></tr>
-        <tr><th>int</th><td>{{ .Params.status.int }}</td></tr>
-        <tr><th>def</th><td>{{ .Params.status.def }}</td></tr>
-        <tr><th>mdef</th><td>{{ .Params.status.mdef }}</td></tr>
-        <tr><th>luk</th><td>{{ .Params.status.luk }}</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section>
-  <h2>出現マップ</h2>
-  {{ if .Params.locations }}
-    <ul>
-      {{ range .Params.locations }}
-        <li>{{ . }}</li>
-      {{ end }}
-    </ul>
-  {{ else }}
-    <p>未設定</p>
-  {{ end }}
-</section>
-
-<section>
-  <h2>ドロップ</h2>
-  {{ if .Params.drops }}
-    <ul>
-      {{ range .Params.drops }}
-        <li>{{ . }}</li>
-      {{ end }}
-    </ul>
-  {{ else }}
-    <p>未設定</p>
-  {{ end }}
-</section>
-
-{{ if .Content }}
-<section>
-  <h2>メモ</h2>
-  {{ .Content }}
 </section>
 {{ end }}
 
-<p>
-  <a href="{{ .CurrentSection.RelPermalink }}">← 図鑑一覧へ戻る</a>
+<p class="d-back">
+  <a href="{{ .CurrentSection.RelPermalink }}">← モンスター一覧に戻る</a>
 </p>
 {{ end }}
