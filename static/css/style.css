@@ -2,6 +2,7 @@
   --fg:#111;
   --border:#000;
   --bg:#fff;
+  --muted:#666;
 }
 
 *{ box-sizing:border-box; }
@@ -25,7 +26,7 @@ h1{
   font-size: 1.2rem;
 }
 
-/* ===== 一覧 ===== */
+/* ===== 一覧（あなたが確定したUI） ===== */
 .ref-grid{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -41,24 +42,16 @@ h1{
   padding: 8px;
 }
 
-/* 名前＋番号 */
 .ref-head{
   margin: 0 0 6px 0;
 }
 
 .ref-name{
-  font-size: 0.92rem;   /* ← 以前比 約0.8倍 */
+  font-size: 0.92rem;
   font-weight: 800;
   text-align: left;
 }
 
-.ref-name .ref-id,
-.ref-name span{
-  font-size: 0.74rem;   /* ← 名前の約0.8倍 */
-  font-weight: 600;
-}
-
-/* 画像 */
 .ref-img{
   width: 100%;
   height: auto;
@@ -67,9 +60,124 @@ h1{
   image-rendering: pixelated;
 }
 
-/* スマホ */
+/* ===== 詳細UI ===== */
+.d-title{
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.d-hero{
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 6px;
+}
+
+.d-hero-img{
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.d-line{
+  margin: 4px 0 14px;
+  font-size: 0.95rem;
+}
+
+.d-block{
+  margin: 14px 0;
+}
+
+.d-h2{
+  margin: 0 0 8px;
+  font-size: 1.0rem;
+  font-weight: 800;
+}
+
+.d-level{
+  border: 1px solid var(--border);
+  padding: 10px;
+}
+
+.d-level-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.d-btn{
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 6px 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.d-input{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.d-input input{
+  width: 90px;
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+}
+
+.d-list{
+  border: 1px solid var(--border);
+  margin: 0;
+}
+
+.d-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+}
+
+.d-row:first-child{
+  border-top: none;
+}
+
+.d-row dt{
+  margin: 0;
+  font-weight: 700;
+}
+
+.d-row dd{
+  margin: 0;
+  font-weight: 700;
+}
+
+.d-bullets{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.d-places{
+  margin: 0;
+}
+
+.d-back{
+  margin: 18px 0 0;
+}
+
+.d-back a{
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
 @media (max-width: 640px){
-  .ref-name{
-    font-size: 0.86rem;
-  }
+  main{ padding: 10px; }
+  .ref-grid{ grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .d-hero-img{ max-width: 100%; }
 }
