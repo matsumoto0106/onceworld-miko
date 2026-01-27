@@ -72,6 +72,17 @@
 </section>
 {{ end }}
 
+{{ with .Params.pet_skills }}
+<section class="d-block">
+  <h2 class="d-h2">ペットスキル</h2>
+  <ul class="d-bullets">
+    {{ range . }}
+      <li>{{ . }}</li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
 {{ with .Params.locations }}
 <section class="d-block">
   <h2 class="d-h2">出現場所</h2>
