@@ -71,17 +71,20 @@
   </ul>
 </section>
 {{ end }}
-
 {{ with .Params.pet_skills }}
 <section class="d-block">
   <h2 class="d-h2">ペットスキル</h2>
-  <ul class="d-bullets">
+  <dl class="d-list">
     {{ range . }}
-      <li>{{ . }}</li>
+      <div class="d-row">
+        <dt>Lv{{ .level }}</dt>
+        <dd>{{ .name }}</dd>
+      </div>
     {{ end }}
-  </ul>
+  </dl>
 </section>
 {{ end }}
+
 
 {{ with .Params.locations }}
 <section class="d-block">
