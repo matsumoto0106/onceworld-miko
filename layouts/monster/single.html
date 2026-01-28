@@ -72,8 +72,10 @@
 </section>
 {{ end }}
 
-{{/* ペットスキルは JSONから読み込み（idで参照） */}}
-<section class="d-block" id="pet-skill-section" data-monster-id="{{ .Params.id }}">
+{{/* ペットスキル：JSONから読み込み */}}
+<section class="d-block" id="pet-skill-section"
+  data-monster-id="{{ .Params.id }}"
+  data-json-url="{{ "db/pet_skills.json" | relURL }}">
   <h2 class="d-h2">ペットスキル</h2>
   <dl class="d-list" id="pet-skill-list">
     <div class="d-row"><dt>Lv31</dt><dd>読み込み中…</dd></div>
@@ -93,6 +95,5 @@
   <a href="{{ .CurrentSection.RelPermalink }}">← モンスター一覧に戻る</a>
 </p>
 
-{{/* ペットスキル描画スクリプト */}}
 <script defer src="{{ "js/pet-skills.js" | relURL }}"></script>
 {{ end }}
