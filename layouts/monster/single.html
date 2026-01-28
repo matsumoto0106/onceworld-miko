@@ -1,11 +1,5 @@
 {{ define "main" }}
-{{ $pet := .Params.pet_skills | default (slice) }}
-
 <h1 class="d-title">{{ .Title }}</h1>
-
-<p style="margin:8px 0; font-size:12px; opacity:.7;">
-  DEBUG pet_skills type={{ printf "%T" $pet }} / len={{ len $pet }}
-</p>
 
 {{ with .Params.image }}
   {{ $img := strings.TrimPrefix "/" . }}
@@ -78,44 +72,13 @@
 </section>
 {{ end }}
 
-{{ if gt (len $pet) 0 }}
-<section class="d-block">
+{{/* ペットスキルは JSONから読み込み（idで参照） */}}
+<section class="d-block" id="pet-skill-section" data-monster-id="{{ .Params.id }}">
   <h2 class="d-h2">ペットスキル</h2>
-
-  {{ $levels := slice 31 71 121 181 }}
-
-  <dl class="d-list">
-    {{ range $i, $ps := $pet }}
-      <div class="d-row">
-        <dt>Lv{{ index $levels $i }}</dt>
-        <dd>
-          {{ $out := slice }}
-
-          {{ with index $ps "add" }}
-            {{ range $k, $v := . }}
-              {{ $out = $out | append (printf "%s+%v" $k $v) }}
-            {{ end }}
-          {{ end }}
-
-          {{ with index $ps "mul" }}
-            {{ range $k, $v := . }}
-              {{ $out = $out | append (printf "%s×%v%%" $k (mul $v 100)) }}
-            {{ end }}
-          {{ end }}
-
-          {{ with index $ps "final_mul" }}
-            {{ range $k, $v := . }}
-              {{ $out = $out | append (printf "%s×%v%%(最終)" $k (mul $v 100)) }}
-            {{ end }}
-          {{ end }}
-
-          {{ delimit $out " / " }}
-        </dd>
-      </div>
-    {{ end }}
+  <dl class="d-list" id="pet-skill-list">
+    <div class="d-row"><dt>Lv31</dt><dd>読み込み中…</dd></div>
   </dl>
 </section>
-{{ end }}
 
 {{ with .Params.locations }}
 <section class="d-block">
@@ -129,4 +92,7 @@
 <p class="d-back">
   <a href="{{ .CurrentSection.RelPermalink }}">← モンスター一覧に戻る</a>
 </p>
+
+{{/* ペットスキル描画スクリプト */}}
+<script defer src="{{ "js/pet-skills.js" | relURL }}"></script>
 {{ end }}
