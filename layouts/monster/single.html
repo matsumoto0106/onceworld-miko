@@ -71,20 +71,48 @@
   </ul>
 </section>
 {{ end }}
+
 {{ with .Params.pet_skills }}
 <section class="d-block">
   <h2 class="d-h2">ペットスキル</h2>
+
+  {{ $levels := slice 31 71 121 181 }}
+
   <dl class="d-list">
-    {{ range . }}
+    {{ range $i, $ps := . }}
       <div class="d-row">
-        <dt>Lv{{ .level }}</dt>
-        <dd>{{ .name }}</dd>
+        <dt>Lv{{ index $levels $i }}</dt>
+        <dd>
+          {{/* 表示文字列を自動生成（add / mul / final_mul） */}}
+          {{ $out := slice }}
+
+          {{ with $ps.add }}
+            {{ range $k, $v := . }}
+              {{ $out = $out | append (printf "%s+%v" $k $v) }}
+            {{ end }}
+          {{ end }}
+
+          {{ with $ps.mul }}
+            {{ range $k, $v := . }}
+              {{ $pct := mul $v 100 }}
+              {{ $out = $out | append (printf "%s×%v%%" $k $pct) }}
+            {{ end }}
+          {{ end }}
+
+          {{ with $ps.final_mul }}
+            {{ range $k, $v := . }}
+              {{ $pct := mul $v 100 }}
+              {{ $out = $out | append (printf "%s×%v%%(最終)" $k $pct) }}
+            {{ end }}
+          {{ end }}
+
+          {{ delimit $out " / " }}
+        </dd>
       </div>
     {{ end }}
   </dl>
 </section>
 {{ end }}
-
 
 {{ with .Params.locations }}
 <section class="d-block">
