@@ -14,15 +14,22 @@
 
 <section class="d-block">
   <div class="d-level">
-    <div class="d-level-row">
-      {{ with .Params.level_shortcuts }}
-        {{ range . }}
-          <button class="d-btn" type="button" data-lv="{{ . }}">Lv {{ . }}</button>
+    <div class="d-level-row" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      <div class="d-level-row" style="display:flex; gap:6px; flex-wrap:wrap;">
+        {{ with .Params.level_shortcuts }}
+          {{ range . }}
+            <button class="d-btn" type="button" data-lv="{{ . }}">Lv {{ . }}</button>
+          {{ end }}
+        {{ else }}
+          <button class="d-btn" type="button" data-lv="1">Lv 1</button>
+          <button class="d-btn" type="button" data-lv="700">Lv 700</button>
         {{ end }}
-      {{ else }}
-        <button class="d-btn" type="button" data-lv="1">Lv 1</button>
-        <button class="d-btn" type="button" data-lv="700">Lv 700</button>
-      {{ end }}
+      </div>
+
+      <label class="d-input" style="display:flex; align-items:center; gap:6px;">
+        <input id="origin-exp" type="checkbox">
+        経験の起源
+      </label>
     </div>
 
     <div class="d-level-row">
@@ -54,7 +61,7 @@
 <section class="d-block">
   <h2 class="d-h2">報酬・捕獲</h2>
   <dl class="d-list">
-    <div class="d-row"><dt>獲得経験値</dt><dd>{{ .Params.exp }}</dd></div>
+    <div class="d-row"><dt>獲得経験値</dt><dd id="exp-value" data-base="{{ .Params.exp }}">{{ .Params.exp }}</dd></div>
     <div class="d-row"><dt>獲得ゴールド</dt><dd>{{ .Params.gold }}</dd></div>
     <div class="d-row"><dt>捕獲率</dt><dd>{{ .Params.capture_rate }}%</dd></div>
   </dl>
