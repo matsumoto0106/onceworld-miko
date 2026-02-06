@@ -6,7 +6,15 @@
     return Number.isFinite(n) && n >= 1 ? n : 1;
   };
 
+  // ステータス：仮スケール（既存）
   const calcStat = (base, lv) => Math.floor(base * (1 + (lv - 1) * LEVELSCALE));
+
+  // 経験値：基礎経験値 × floor(0.2×Lv^1.1（最低保証1）)
+  const calcExpMultiplier = (lv) => {
+    const raw = 0.2 * Math.pow(lv, 1.1);
+    const floored = Math.floor(raw);
+    return Math.max(1, floored);
+  };
 
   const init = () => {
     const levelInput = document.getElementById("monster-level");
@@ -17,10 +25,7 @@
 
     if (!levelInput || statEls.length === 0) return;
 
-    const recalcStats = () => {
-      const lv = clampLv(levelInput.value);
-      levelInput.value = String(lv);
-
+    const recalcStats = (lv) => {
       statEls.forEach((el) => {
         const base = Number(el.dataset.base);
         const stat = el.dataset.stat || "";
@@ -34,18 +39,24 @@
       });
     };
 
-    const recalcExpBaseOnly = () => {
+    const recalcExp = (lv) => {
       if (!expEl) return;
-      const base = Number(expEl.dataset.base);
-      if (!Number.isFinite(base)) return;
 
-      const on = originExp ? originExp.checked : false;
-      expEl.textContent = String(on ? base * 2 : base);
+      const baseRaw = Number(expEl.dataset.base);
+      if (!Number.isFinite(baseRaw)) return;
+
+      const base = (originExp && originExp.checked) ? baseRaw * 2 : baseRaw;
+
+      const mult = calcExpMultiplier(lv);
+      expEl.textContent = String(base * mult);
     };
 
     const recalcAll = () => {
-      recalcStats();
-      recalcExpBaseOnly();
+      const lv = clampLv(levelInput.value);
+      levelInput.value = String(lv);
+
+      recalcStats(lv);
+      recalcExp(lv);
     };
 
     lvBtns.forEach((btn) => {
@@ -60,7 +71,7 @@
     levelInput.addEventListener("change", recalcAll);
 
     if (originExp) {
-      originExp.addEventListener("change", recalcExpBaseOnly);
+      originExp.addEventListener("change", recalcAll);
     }
 
     recalcAll();
