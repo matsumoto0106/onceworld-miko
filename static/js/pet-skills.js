@@ -78,7 +78,12 @@
   fetch(jsonUrl, { cache: "no-store" })
     .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
     .then((db) => render(db?.[monsterId]))
-    .catch(() => {
-      section.style.display = "none";
+    .catch((e) => {
+  console.error("pet skills load error:", e);
+  list.innerHTML =
+    `<div class="d-row">
+       <dt>―</dt>
+       <dd>ペットスキルデータが見つかりません</dd>
+     </div>`;
     });
 })();
