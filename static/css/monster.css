@@ -65,7 +65,7 @@
   border-radius: 12px;
 }
 
-/* ボタン（押しやすさ） */
+/* ボタン */
 .d-btn{
   border: 1px solid var(--border);
   background: #fff;
@@ -84,9 +84,28 @@
   font-weight: 700;
 }
 
-/* ▼ Lv入力を「下線」＋小さめに */
-.d-input input[type="number"]{
-  width: 56px;               /* 小さく */
+/* ===== Lv行のレイアウト制御 ===== */
+/* Lvボタン列：折り返しOK */
+.d-level-row--wrap{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Lv入力＋起源：横並び固定（折り返し禁止） */
+.d-level-row--nowrap{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Lv入力を下線＋小さめ */
+.d-level-row--nowrap .d-input input[type="number"]{
+  width: 56px;
   height: 28px;
   padding: 0 2px;
   border: none;
@@ -96,27 +115,13 @@
   outline: none;
 }
 
-/* チェックボックスは少し小さめ */
+/* チェックボックス少し小さめ */
 .d-input input[type="checkbox"]{
   width: 16px;
   height: 16px;
 }
 
-/* ▼ Lv入力＋起源の行は1段固定 */
-.d-level-row{
-  display: flex;
-  flex-wrap: nowrap;         /* 折り返さない */
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-/* Lvボタン列は折り返しOKのまま（ここだけ上書きされないように） */
-.d-level > .d-level-row:first-child{
-  flex-wrap: wrap;
-}
-
-/* dl（スマホで見やすい） */
+/* ===== dl（ステータス等） ===== */
 .d-list{
   border: 1px solid var(--border);
   margin: 0;
@@ -149,7 +154,7 @@
   font-weight: 700;
 }
 
-/* ドロップ横並び（スマホで収まらない場合は横スクロール） */
+/* ドロップ横並び（収まらない場合は横スクロール） */
 .d-bullets{
   display: flex;
   gap: 12px;
@@ -187,5 +192,9 @@
   .d-line{ font-size: 15px; }
   .d-h2{ font-size: 17px; }
   .d-row{ grid-template-columns: 110px 1fr; }
-  .d-input input[type="number"]{ width: 70px; height: 30px; }
+
+  .d-level-row--nowrap .d-input input[type="number"]{
+    width: 70px;
+    height: 30px;
+  }
 }
