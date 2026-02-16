@@ -72,15 +72,12 @@
 {{ with .Params.drops }}
 <section class="d-block">
   <h2 class="d-h2">ドロップ</h2>
-  <ul class="d-bullets">
-    {{ range . }}
-      <li>
-        <a href="{{ (printf "/item/%s/" (. | urlize)) | relURL }}">
-          {{ . }}
-        </a>
-      </li>
+  <p>
+    {{ range $i, $v := . }}
+      {{ if $i }}, {{ end }}
+      <a href="{{ (printf "/item/%s/" ($v | urlize)) | relURL }}">{{ $v }}</a>
     {{ end }}
-  </ul>
+  </p>
 </section>
 {{ end }}
 
@@ -96,12 +93,10 @@
 {{ with .Params.locations }}
 <section class="d-block">
   <h2 class="d-h2">出現場所</h2>
-  <p class="d-places">
+  <p>
     {{ range $i, $v := . }}
       {{ if $i }} / {{ end }}
-      <a href="{{ (printf "/map/%s/" ($v | urlize)) | relURL }}">
-        {{ $v }}
-      </a>
+      <a href="{{ (printf "/map/%s/" ($v | urlize)) | relURL }}">{{ $v }}</a>
     {{ end }}
   </p>
 </section>
