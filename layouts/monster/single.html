@@ -17,7 +17,6 @@
 <section class="d-block">
   <div class="d-level">
 
-    <!-- Lvボタン -->
     <div class="d-level-row d-level-row--wrap">
       {{ with .Params.level_shortcuts }}
         {{ range . }}
@@ -29,7 +28,6 @@
       {{ end }}
     </div>
 
-    <!-- Lv入力 + 経験の起源（横並び固定） -->
     <div class="d-level-row d-level-row--nowrap">
       <label class="d-input">
         Lv <input id="monster-level" type="number" min="1" value="1">
@@ -76,7 +74,11 @@
   <h2 class="d-h2">ドロップ</h2>
   <ul class="d-bullets">
     {{ range . }}
-      <li>{{ . }}</li>
+      <li>
+        <a href="{{ (printf "/item/%s/" (. | urlize)) | relURL }}">
+          {{ . }}
+        </a>
+      </li>
     {{ end }}
   </ul>
 </section>
@@ -95,7 +97,12 @@
 <section class="d-block">
   <h2 class="d-h2">出現場所</h2>
   <p class="d-places">
-    {{ range $i, $v := . }}{{ if $i }} / {{ end }}{{ $v }}{{ end }}
+    {{ range $i, $v := . }}
+      {{ if $i }} / {{ end }}
+      <a href="{{ (printf "/map/%s/" ($v | urlize)) | relURL }}">
+        {{ $v }}
+      </a>
+    {{ end }}
   </p>
 </section>
 {{ end }}
