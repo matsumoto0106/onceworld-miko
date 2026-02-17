@@ -6,7 +6,6 @@
     return Number.isFinite(n) && n >= 1 ? n : 1;
   };
 
-  // ステータス：仮スケール（既存）
   const calcStat = (base, lv) => Math.floor(base * (1 + (lv - 1) * LEVELSCALE));
 
   // 経験値：基礎経験値 × floor(0.2×Lv^1.1（最低保証1）)
@@ -22,6 +21,9 @@
     const lvBtns = document.querySelectorAll(".d-btn[data-lv]");
     const originExp = document.getElementById("origin-exp");
     const expEl = document.getElementById("exp-value");
+
+    const statusRoot = document.getElementById("status-table");
+    const rewardRoot = expEl ? expEl.closest(".d-list") : null;
 
     if (!levelInput || statEls.length === 0) return;
 
@@ -51,35 +53,43 @@
       expEl.textContent = String(base * mult);
     };
 
-    const recalcAll = () => {
-      const lv = clampLv(levelInput.value);
-      levelInput.value = String(lv);
+    // 入力中に連打されるので、rAFで1回にまとめる
+    let rafId = 0;
+    const schedule = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
 
-      recalcStats(lv);
-      recalcExp(lv);
+        const lv = clampLv(levelInput.value);
+        levelInput.value = String(lv);
 
-      // ▼ カンマ表示（必要なときだけ）
-      if (typeof window.formatNumbers === "function") {
-        window.formatNumbers(document);
-      }
+        recalcStats(lv);
+        recalcExp(lv);
+
+        // ▼ カンマ表示：必要な範囲だけ
+        if (typeof window.formatNumbers === "function") {
+          if (statusRoot) window.formatNumbers(statusRoot);
+          if (rewardRoot) window.formatNumbers(rewardRoot);
+        }
+      });
     };
 
     lvBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         levelInput.value = btn.dataset.lv || "1";
-        recalcAll();
+        schedule();
       });
     });
 
-    levelInput.addEventListener("input", recalcAll);
-    levelInput.addEventListener("change", recalcAll);
+    levelInput.addEventListener("input", schedule);
+    levelInput.addEventListener("change", schedule);
 
     if (originExp) {
-      originExp.addEventListener("change", recalcAll);
+      originExp.addEventListener("change", schedule);
     }
 
-    recalcAll();
+    schedule();
   };
 
   document.addEventListener("DOMContentLoaded", init);
