@@ -103,8 +103,8 @@
   margin-bottom: 10px;
 }
 
-/* Lv入力を下線＋小さめ */
-.d-level-row--nowrap .d-input input[type="number"]{
+/* ▼ Lv入力：typeに依存せず下線＋小さめ */
+#monster-level{
   width: 56px;
   height: 28px;
   padding: 0 2px;
@@ -192,9 +192,5 @@
   .d-line{ font-size: 15px; }
   .d-h2{ font-size: 17px; }
   .d-row{ grid-template-columns: 110px 1fr; }
-
-  .d-level-row--nowrap .d-input input[type="number"]{
-    width: 70px;
-    height: 30px;
-  }
+  #monster-level{ width: 70px; height: 30px; }
 }
