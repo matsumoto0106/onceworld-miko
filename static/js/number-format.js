@@ -4,12 +4,14 @@
   const formatNode = (el) => {
     const raw = (el.textContent || "").trim();
     if (!raw) return;
+
+    // すでに "1,000" などになっているものは対象外（数値判定に通らない）
     if (!isNumericText(raw)) return;
 
     const num = Number(raw);
     if (!Number.isFinite(num)) return;
 
-    // 整数はカンマ、小数はそのまま（必要ならここは後で変更可能）
+    // 整数だけカンマ（小数はそのまま）
     if (Number.isInteger(num)) {
       el.textContent = num.toLocaleString("ja-JP");
     } else {
@@ -17,13 +19,13 @@
     }
   };
 
-  const formatAll = (root = document) => {
-    root.querySelectorAll(".n").forEach(formatNode);
+  const formatAll = (root) => {
+    const r = root && root.querySelectorAll ? root : document;
+    r.querySelectorAll(".n").forEach(formatNode);
   };
 
-  // 外部から呼べるようにしておく（Lv変更後に呼ぶ）
   window.formatNumbers = formatAll;
 
-  document.addEventListener("DOMContentLoaded", () => formatAll());
-  window.addEventListener("load", () => formatAll());
+  document.addEventListener("DOMContentLoaded", () => formatAll(document));
+  window.addEventListener("load", () => formatAll(document));
 })();
