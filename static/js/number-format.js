@@ -1,30 +1,29 @@
 (() => {
-  const fmt = (n) => {
-    if (!Number.isFinite(n)) return null;
-    return n.toLocaleString("ja-JP");
-  };
+  const isNumericText = (s) => /^-?\d+(\.\d+)?$/.test(s);
 
   const formatNode = (el) => {
     const raw = (el.textContent || "").trim();
     if (!raw) return;
-
-    // "1234" 形式のみ対象（符号もOK）
-    if (!/^-?\d+(\.\d+)?$/.test(raw)) return;
+    if (!isNumericText(raw)) return;
 
     const num = Number(raw);
-    const out = fmt(num);
-    if (out != null) el.textContent = out;
+    if (!Number.isFinite(num)) return;
+
+    // 整数はカンマ、小数はそのまま（必要ならここは後で変更可能）
+    if (Number.isInteger(num)) {
+      el.textContent = num.toLocaleString("ja-JP");
+    } else {
+      el.textContent = String(num);
+    }
   };
 
-  const run = () => {
-    document.querySelectorAll(".n").forEach(formatNode);
+  const formatAll = (root = document) => {
+    root.querySelectorAll(".n").forEach(formatNode);
   };
 
-  // 初回
-  document.addEventListener("DOMContentLoaded", run);
-  window.addEventListener("load", run);
+  // 外部から呼べるようにしておく（Lv変更後に呼ぶ）
+  window.formatNumbers = formatAll;
 
-  // レベル変更などで数値が書き換わるので監視
-  const obs = new MutationObserver(() => run());
-  obs.observe(document.documentElement, { subtree: true, childList: true, characterData: true });
+  document.addEventListener("DOMContentLoaded", () => formatAll());
+  window.addEventListener("load", () => formatAll());
 })();
