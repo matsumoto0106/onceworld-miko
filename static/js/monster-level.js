@@ -53,12 +53,14 @@
       expEl.textContent = String(base * mult);
     };
 
-    // 入力中に連打されるので、rAFで1回にまとめる
     let rafId = 0;
     const schedule = () => {
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
         rafId = 0;
+
+        // ▼ 入力中に空なら計算しない（戻さない）
+        if (levelInput.value === "") return;
 
         const lv = clampLv(levelInput.value);
         levelInput.value = String(lv);
@@ -66,13 +68,24 @@
         recalcStats(lv);
         recalcExp(lv);
 
-        // ▼ カンマ表示：必要な範囲だけ
         if (typeof window.formatNumbers === "function") {
           if (statusRoot) window.formatNumbers(statusRoot);
           if (rewardRoot) window.formatNumbers(rewardRoot);
         }
       });
     };
+
+    // ▼ フォーカスが外れたら未入力を1に戻す
+    levelInput.addEventListener("blur", () => {
+      if (levelInput.value === "") {
+        levelInput.value = "1";
+      }
+      schedule();
+    });
+
+    // 入力中（空も許可）
+    levelInput.addEventListener("input", schedule);
+    levelInput.addEventListener("change", schedule);
 
     lvBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -81,9 +94,6 @@
         schedule();
       });
     });
-
-    levelInput.addEventListener("input", schedule);
-    levelInput.addEventListener("change", schedule);
 
     if (originExp) {
       originExp.addEventListener("change", schedule);
