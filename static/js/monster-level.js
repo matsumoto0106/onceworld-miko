@@ -1,5 +1,8 @@
+// static/js/monster-level.js
 (() => {
   const LEVELSCALE = 0.1;
+
+  const STORAGE_KEY_ORIGIN = "onceworld_origin_exp"; // 経験の起源 保存キー
 
   const clampLv = (v) => {
     const n = parseInt(v, 10);
@@ -27,6 +30,15 @@
     const rewardRoot = expEl ? expEl.closest(".d-list") : null;
 
     if (!levelInput || statEls.length === 0) return;
+
+    // ▼ 起源チェックの復元（localStorage）
+    if (originExp) {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY_ORIGIN);
+        if (saved === "1") originExp.checked = true;
+        if (saved === "0") originExp.checked = false;
+      } catch (_) {}
+    }
 
     const recalcStats = (lv) => {
       statEls.forEach((el) => {
@@ -62,15 +74,10 @@
 
         const raw = (levelInput.value || "").trim();
 
-        // 入力中に空は許可：計算しない
         if (raw === "") return;
-
-        // 数字以外は計算しない（消し途中対策）
         if (!isDigits(raw)) return;
 
         const lv = clampLv(raw);
-
-        // blur / change / button のときだけ入力欄へ書き戻す
         if (normalizeInput) levelInput.value = String(lv);
 
         recalcStats(lv);
@@ -94,7 +101,6 @@
 
     // 入力中：空OK、書き戻ししない
     levelInput.addEventListener("input", () => {
-      // 空にした直後、前のrAFが残っていると書き戻しが起き得るので潰す
       if ((levelInput.value || "") === "" && rafId) {
         cancelAnimationFrame(rafId);
         rafId = 0;
@@ -116,7 +122,14 @@
     });
 
     if (originExp) {
-      originExp.addEventListener("change", () => requestRecalc(true));
+      originExp.addEventListener("change", () => {
+        // ▼ 起源チェックの保存（localStorage）
+        try {
+          localStorage.setItem(STORAGE_KEY_ORIGIN, originExp.checked ? "1" : "0");
+        } catch (_) {}
+
+        requestRecalc(true);
+      });
     }
 
     requestRecalc(true);
