@@ -30,7 +30,12 @@
 
     <div class="d-level-row d-level-row--nowrap">
       <label class="d-input">
-        Lv <input id="monster-level" type="number" min="1" value="1">
+        Lv
+        <input id="monster-level"
+               type="text"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               value="1">
       </label>
 
       <label class="d-input">
