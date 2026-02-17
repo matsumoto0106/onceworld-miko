@@ -46,16 +46,16 @@
   <h2 class="d-h2">ステータス</h2>
 
   <dl class="d-list" id="status-table">
-    <div class="d-row"><dt>vit</dt><dd data-stat="vit" data-base="{{ .Params.status.vit }}">{{ .Params.status.vit }}</dd></div>
-    <div class="d-row"><dt>spd</dt><dd data-stat="spd" data-base="{{ .Params.status.spd }}">{{ .Params.status.spd }}</dd></div>
-    <div class="d-row"><dt>atk</dt><dd data-stat="atk" data-base="{{ .Params.status.atk }}">{{ .Params.status.atk }}</dd></div>
-    <div class="d-row"><dt>int</dt><dd data-stat="int" data-base="{{ .Params.status.int }}">{{ .Params.status.int }}</dd></div>
-    <div class="d-row"><dt>def</dt><dd data-stat="def" data-base="{{ .Params.status.def }}">{{ .Params.status.def }}</dd></div>
-    <div class="d-row"><dt>mdef</dt><dd data-stat="mdef" data-base="{{ .Params.status.mdef }}">{{ .Params.status.mdef }}</dd></div>
-    <div class="d-row"><dt>luk</dt><dd data-stat="luk" data-base="{{ .Params.status.luk }}">{{ .Params.status.luk }}</dd></div>
+    <div class="d-row"><dt>vit</dt><dd data-stat="vit" data-base="{{ .Params.status.vit }}">{{ lang.NumFmt 0 .Params.status.vit }}</dd></div>
+    <div class="d-row"><dt>spd</dt><dd data-stat="spd" data-base="{{ .Params.status.spd }}">{{ lang.NumFmt 0 .Params.status.spd }}</dd></div>
+    <div class="d-row"><dt>atk</dt><dd data-stat="atk" data-base="{{ .Params.status.atk }}">{{ lang.NumFmt 0 .Params.status.atk }}</dd></div>
+    <div class="d-row"><dt>int</dt><dd data-stat="int" data-base="{{ .Params.status.int }}">{{ lang.NumFmt 0 .Params.status.int }}</dd></div>
+    <div class="d-row"><dt>def</dt><dd data-stat="def" data-base="{{ .Params.status.def }}">{{ lang.NumFmt 0 .Params.status.def }}</dd></div>
+    <div class="d-row"><dt>mdef</dt><dd data-stat="mdef" data-base="{{ .Params.status.mdef }}">{{ lang.NumFmt 0 .Params.status.mdef }}</dd></div>
+    <div class="d-row"><dt>luk</dt><dd data-stat="luk" data-base="{{ .Params.status.luk }}">{{ lang.NumFmt 0 .Params.status.luk }}</dd></div>
 
     {{ with .Params.fixed_status.mov }}
-      <div class="d-row"><dt>mov</dt><dd data-stat="mov" data-base="{{ . }}">{{ . }}</dd></div>
+      <div class="d-row"><dt>mov</dt><dd data-stat="mov" data-base="{{ . }}">{{ lang.NumFmt 0 . }}</dd></div>
     {{ end }}
   </dl>
 </section>
@@ -63,9 +63,18 @@
 <section class="d-block">
   <h2 class="d-h2">報酬・捕獲</h2>
   <dl class="d-list">
-    <div class="d-row"><dt>獲得経験値</dt><dd id="exp-value" data-base="{{ .Params.exp }}">{{ .Params.exp }}</dd></div>
-    <div class="d-row"><dt>獲得ゴールド</dt><dd>{{ .Params.gold }}</dd></div>
-    <div class="d-row"><dt>捕獲率</dt><dd>{{ .Params.capture_rate }}%</dd></div>
+    <div class="d-row">
+      <dt>獲得経験値</dt>
+      <dd id="exp-value" data-base="{{ .Params.exp }}">{{ lang.NumFmt 0 .Params.exp }}</dd>
+    </div>
+    <div class="d-row">
+      <dt>獲得ゴールド</dt>
+      <dd>{{ lang.NumFmt 0 .Params.gold }}</dd>
+    </div>
+    <div class="d-row">
+      <dt>捕獲率</dt>
+      <dd>{{ .Params.capture_rate }}%</dd>
+    </div>
   </dl>
 </section>
 
