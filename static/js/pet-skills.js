@@ -1,7 +1,8 @@
 (() => {
   const LEVELS = [31, 71, 121, 181];
 
-  const STAT_LABEL = {
+  // 表示名（ここだけ変えればUI側で統一できる）
+  const LABEL = {
     vit: "VIT",
     spd: "SPD",
     atk: "ATK",
@@ -10,113 +11,112 @@
     mdef: "MDEF",
     luk: "LUK",
     mov: "MOV",
-    exp: "EXP",
+    exp: "経験値",
+    capture: "基礎捕獲",
+    drop: "基礎ドロップ",
     heal: "HP回復",
-    capture: "基礎捕獲×",
-    drop: "基礎ドロップ×",
   };
 
-  const fmtNum = (n) => {
-    if (typeof n !== "number") return String(n ?? "");
-    return Number.isInteger(n) ? n.toLocaleString("ja-JP") : String(n);
+  const fmtNumber = (v) => {
+    if (typeof v !== "number") return String(v ?? "");
+    // 整数はカンマ、小数はそのまま
+    return Number.isInteger(v) ? v.toLocaleString("ja-JP") : String(v);
   };
 
-  // mul/final_mul は「×」表示（例：0.35 → ×1.35）
-  const fmtMul = (ratio) => {
-    const r = Number(ratio);
-    if (!Number.isFinite(r)) return "";
-    const x = 1 + r;
-    // 端数が出るのは想定内。不要なら round 桁数を変えてOK
-    return `×${x.toFixed(2).replace(/\.?0+$/, "")}`;
+  // 1エントリ（例：{ "mul": { "capture": 50 } }）を表示文字列へ
+  const entryToText = (entry) => {
+    if (!entry || typeof entry !== "object") return "—";
+    const keys = Object.keys(entry);
+    if (keys.length === 0) return "—";
+
+    const kind = keys[0]; // add / mul / final_mul
+    const payload = entry[kind];
+    if (!payload || typeof payload !== "object") return "—";
+
+    const stats = Object.keys(payload);
+    if (stats.length === 0) return "—";
+
+    const statKey = stats[0];
+    const value = payload[statKey];
+
+    const name = LABEL[statKey] ?? statKey; // 未定義はそのまま
+    const num = fmtNumber(value);
+
+    // ルール：
+    // - 無記号（add）= 加算 → +n
+    // - *（mul）= 乗算 → ×n%
+    // - **（final_mul）= 最終乗算 → 最終×n%
+    if (kind === "add") {
+      return `${name} +${num}`;
+    }
+    if (kind === "mul") {
+      return `${name} ×${num}%`;
+    }
+    if (kind === "final_mul") {
+      return `${name} 最終×${num}%`;
+    }
+    // 想定外
+    return `${name} ${num}`;
   };
 
-  const parseOne = (entry) => {
-    if (!entry || typeof entry !== "object") return null;
-
-    if (entry.add) {
-      const stat = Object.keys(entry.add)[0];
-      const val = entry.add[stat];
-      const name = STAT_LABEL[stat] ?? stat;
-      return `${name} +${fmtNum(val)}`;
-    }
-
-    if (entry.mul) {
-      const stat = Object.keys(entry.mul)[0];
-      const val = entry.mul[stat];
-      const name = STAT_LABEL[stat] ?? stat;
-
-      // capture/drop/exp など “倍率系” は × 表示に寄せる
-      if (stat === "capture" || stat === "drop" || stat === "exp") {
-        return `${name} ${fmtMul(val)}`;
-      }
-
-      // それ以外は +〇% 表示
-      return `${name} +${fmtNum(val * 100)}%`;
-    }
-
-    if (entry.final_mul) {
-      const stat = Object.keys(entry.final_mul)[0];
-      const val = entry.final_mul[stat];
-      const name = STAT_LABEL[stat] ?? stat;
-
-      if (stat === "capture" || stat === "drop" || stat === "exp") {
-        return `${name} 最終${fmtMul(val)}`;
-      }
-
-      return `${name} 最終+${fmtNum(val * 100)}%`;
-    }
-
-    return null;
+  const buildRows = (skillsArr) => {
+    // skillsArr は 4枠固定推奨（不足は {} でもOK）
+    const arr = Array.isArray(skillsArr) ? skillsArr : [];
+    const rows = LEVELS.map((lv, i) => {
+      const text = entryToText(arr[i]);
+      return `
+        <div class="d-row">
+          <dt>Lv${lv}</dt>
+          <dd>${escapeHtml(text)}</dd>
+        </div>
+      `.trim();
+    });
+    return rows.join("");
   };
 
-  const render = (skills) => {
-    const list = document.getElementById("pet-skill-list");
-    if (!list) return;
-
-    list.innerHTML = "";
-
-    for (let i = 0; i < LEVELS.length; i++) {
-      const lv = LEVELS[i];
-      const label = skills && skills[i] ? parseOne(skills[i]) : null;
-
-      const row = document.createElement("div");
-      row.className = "d-row";
-
-      const dt = document.createElement("dt");
-      dt.textContent = `Lv${lv}`;
-
-      const dd = document.createElement("dd");
-      dd.textContent = label || "—";
-
-      row.appendChild(dt);
-      row.appendChild(dd);
-      list.appendChild(row);
-    }
+  // 最低限のエスケープ（万一の混入対策）
+  const escapeHtml = (s) => {
+    return String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
   };
 
   const init = async () => {
     const section = document.getElementById("pet-skill-section");
-    if (!section) return;
+    const list = document.getElementById("pet-skill-list");
+    if (!section || !list) return;
 
-    const monsterId = section.dataset.monsterId;
-    const url = section.dataset.jsonUrl;
-    if (!monsterId || !url) return;
+    const monsterId = (section.dataset.monsterId || "").trim();
+    const url = (section.dataset.jsonUrl || "").trim();
+    if (!monsterId || !url) {
+      list.innerHTML = `
+        <div class="d-row"><dt>Lv31</dt><dd>ペットスキルデータが見つかりません</dd></div>
+      `;
+      return;
+    }
 
     try {
       const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
+      const data = await res.json();
 
-      const skills = json[monsterId];
-      if (!skills) {
-        render(null);
+      const skillsArr = data[monsterId];
+      if (!skillsArr) {
+        list.innerHTML = buildRows([{}, {}, {}, {}]);
         return;
       }
-      render(skills);
+
+      list.innerHTML = buildRows(skillsArr);
     } catch (e) {
-      render(null);
+      list.innerHTML = `
+        <div class="d-row"><dt>Lv31</dt><dd>読み込み失敗</dd></div>
+      `;
     }
   };
 
   document.addEventListener("DOMContentLoaded", init);
+  window.addEventListener("load", init);
 })();
