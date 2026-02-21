@@ -1,11 +1,14 @@
 :root{
+  /* ===== ベース ===== */
   --fg:#111;
   --border:#000;
   --bg:#fff;
   --muted:#666;
 
-  --magic:#7a3cff; /* 魔法カラー */
-  --link:#0a43ff;  /* リンク青（サイト全体で固定） */
+  /* ===== 色ルール（意味が分かるように命名） ===== */
+  --link:#0a43ff;     /* サイト全体のリンク色（固定） */
+  --magic:#7a3cff;    /* 魔法モンスター名 */
+  --physical:#111;    /* 物理モンスター名（=通常文字色） */
 }
 
 *{ box-sizing:border-box; }
@@ -18,24 +21,25 @@ body{
   line-height:1.5;
 }
 
-/* ===== サイト全体：リンク色を青固定（訪問済みでも青） ===== */
+/* =========================================================
+   リンクの共通ルール（サイト全体）
+   - 訪問済みでも色を変えない（青固定）
+   ========================================================= */
 a,
-a:visited{
-  color: var(--link);
-}
-
+a:visited,
 a:hover,
 a:active{
   color: var(--link);
 }
 
-/* 下線は基本あり（分かりやすさ優先） */
 a{
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* ===== レイアウト ===== */
+/* =========================================================
+   レイアウト
+   ========================================================= */
 main{
   max-width: 1600px;
   margin: 0 auto;
@@ -47,21 +51,26 @@ h1{
   font-size: 1.2rem;
 }
 
-/* ===== 一覧 ===== */
+/* =========================================================
+   図鑑一覧（カード）
+   - カードはリンクだが「カード全体の下線」は消す
+   - モンスター名だけ色分け（物理=黒 / 魔法=紫）
+   ========================================================= */
 .ref-grid{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 10px;
 }
 
-/* カードはリンクでも“カード見た目”優先：下線は消すが色は青のまま */
 .ref-card{
   display: block;
   border: 1px solid var(--border);
   background: #fff;
-  text-decoration: none; /* カード全体の下線は消す */
-  color: var(--link);    /* カードも青固定 */
   padding: 8px;
+
+  /* カード全体はリンク：下線は消すが色はリンク青を維持 */
+  text-decoration: none;
+  color: var(--link);
 }
 
 .ref-head{
@@ -74,7 +83,11 @@ h1{
   text-align: left;
 }
 
-/* ▼ 魔法タイプの名前を紫にする（リンク青より優先） */
+/* ▼ モンスター名の色ルール（ここに集約） */
+.ref-card[data-attack-type="物理"] .ref-name{
+  color: var(--physical);
+}
+
 .ref-card[data-attack-type="魔法"] .ref-name{
   color: var(--magic);
 }
@@ -87,7 +100,10 @@ h1{
   image-rendering: pixelated;
 }
 
-/* ===== OnceWorld Header（タイトル中央＋右ハンバーガー / ow- 接頭辞） ===== */
+/* =========================================================
+   ヘッダー（ow- 接頭辞）
+   - タイトルは「リンクでも黒」にする（例外）
+   ========================================================= */
 .ow-header{
   position: sticky;
   top: 0;
@@ -106,7 +122,7 @@ h1{
   margin: 0 auto;
   padding: 10px 12px;
   display: grid;
-  grid-template-columns: 44px 1fr 44px; /* 左 / 中央 / 右 */
+  grid-template-columns: 44px 1fr 44px;
   align-items: center;
 }
 
@@ -127,11 +143,12 @@ h1{
   line-height: 1;
 }
 
-/* タイトルはリンクでも “タイトルらしく黒” にしたい場合は var(--fg) にする
-   → サイト全体は青固定でも、ここだけ例外にしたいなら var(--fg) 推奨
-   今回は「サイト全体青固定」優先で青にします */
-.ow-header-title a{
-  color: var(--link);
+/* ▼ 例外：サイトタイトルは黒固定（visitedでも黒） */
+.ow-header-title a,
+.ow-header-title a:visited,
+.ow-header-title a:hover,
+.ow-header-title a:active{
+  color: var(--fg);
   font-weight: 900;
   text-decoration: none;
   font-size: 1.05rem;
@@ -179,7 +196,7 @@ h1{
 .ow-hamburger-bars::before{ top: -6px; }
 .ow-hamburger-bars::after{ top: 6px; }
 
-/* メニュー */
+/* メニュー（保留でもOK：開いた時に崩れないよう定義だけ残す） */
 .ow-menu{
   position: absolute;
   right: 12px;
@@ -202,8 +219,8 @@ h1{
   display: block;
   padding: 10px 10px;
   border: 1px solid var(--border);
-  text-decoration: none; /* メニュー内は下線なしで見やすく */
-  color: var(--link);    /* 青固定 */
+  text-decoration: none;
+  color: var(--link);
   background: #fff;
 }
 
@@ -229,11 +246,14 @@ h1{
   overflow: hidden;
 }
 
-/* ヘッダー直下が詰まりすぎる場合に少しだけ余白 */
+/* ヘッダー直下の余白（仕切り後に詰まりすぎる場合） */
 main{
   padding-top: 14px;
 }
 
+/* =========================================================
+   レスポンシブ
+   ========================================================= */
 @media (max-width: 640px){
   main{ padding: 10px; padding-top: 14px; }
   .ref-grid{ grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
