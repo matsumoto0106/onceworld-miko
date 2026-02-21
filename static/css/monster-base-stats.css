@@ -1,16 +1,24 @@
-.mbs-wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
-.mbs-head { margin-bottom: 10px; }
-.mbs-title { margin: 0 0 6px; font-size: 1.35rem; }
-.mbs-desc { opacity: .9; margin-top: 6px; }
+.mbs-wrap { max-width: 1100px; margin: 0 auto; padding: 12px; }
+.mbs-head { margin-bottom: 6px; }
+.mbs-title { margin: 0 0 4px; font-size: 1.25rem; }
+.mbs-desc { opacity: .9; margin-top: 4px; font-size: 0.95rem; }
 
-.mbs-controls { display: grid; gap: 8px; margin: 12px 0 14px; }
+.mbs-controls { display: grid; gap: 8px; margin: 10px 0 10px; }
+.mbs-controls-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+
 .mbs-search {
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border: 1px solid rgba(0,0,0,.18);
   border-radius: 10px;
   font-size: 16px;
 }
+
+.mbs-compact { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; opacity: .85; user-select: none; }
+.mbs-compact input { transform: translateY(1px); }
+
+.mbs-status { display: grid; gap: 4px; }
+.mbs-sortstatus { font-size: 13px; opacity: .9; }
 .mbs-note { font-size: 12px; opacity: .75; }
 
 .mbs-table-wrap {
@@ -18,18 +26,23 @@
   border: 1px solid rgba(0,0,0,.12);
   border-radius: 12px;
 }
+
+/* 情報量アップのため、標準はコンパクト寄り */
 .mbs-table {
   border-collapse: separate;
   border-spacing: 0;
   width: max-content;
   min-width: 100%;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.25;
 }
+
 .mbs-table th, .mbs-table td {
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-bottom: 1px solid rgba(0,0,0,.08);
   white-space: nowrap;
 }
+
 .mbs-table thead th {
   position: sticky;
   top: 0;
@@ -37,11 +50,18 @@
   backdrop-filter: blur(6px);
   z-index: 2;
 }
+
+/* 並び替え表示（どの列か分かるように） */
 .mbs-table th.sort { cursor: pointer; user-select: none; }
-.mbs-table th.sort::after { content: " ↕"; opacity: .35; font-size: 12px; }
+.mbs-table th.sort .arrow { margin-left: 4px; opacity: .35; font-size: 11px; }
+.mbs-table th.is-active .arrow { opacity: .95; }
+.mbs-table th.is-active { text-decoration: underline; text-underline-offset: 3px; }
 
 .mbs-table td.num, .mbs-table th.num { text-align: right; }
 
+.rank-col { width: 52px; text-align: right; opacity: .85; }
+
+/* 左固定（順位は固定しない／名前だけ固定） */
 .sticky-col {
   position: sticky;
   left: 0;
@@ -49,11 +69,22 @@
   z-index: 1;
 }
 .mbs-table thead .sticky-col { z-index: 3; }
+
+.mbs-table td.name { min-width: 160px; }
 .mbs-table td.name a { text-decoration: none; }
+.mbs-id { display: inline-block; margin-left: 6px; font-size: 11px; opacity: .55; }
+
 .mbs-table tr:hover td { background: rgba(0,0,0,.03); }
 .mbs-table tr:hover td.sticky-col { background: rgba(0,0,0,.03); }
 
+/* コンパクトON（さらに情報密度UP） */
+.mbs-compact-on .mbs-table { font-size: 12.5px; }
+.mbs-compact-on .mbs-table th, 
+.mbs-compact-on .mbs-table td { padding: 6px 8px; }
+.mbs-compact-on .mbs-table td.name { min-width: 150px; }
+
+/* スマホで特に見やすく */
 @media (max-width: 600px) {
-  .mbs-wrap { padding: 12px; }
-  .mbs-title { font-size: 1.2rem; }
+  .mbs-wrap { padding: 10px; }
+  .mbs-title { font-size: 1.15rem; }
 }
