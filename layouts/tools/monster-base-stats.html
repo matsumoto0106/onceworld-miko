@@ -32,7 +32,7 @@
         <tr>
           <th class="rank-col">順位</th>
 
-          {{/* 名前タップでも id ソートにしたいので data-key="id" にする */}}
+          {{/* 名前タップでも id ソート（五十音順に戻らない） */}}
           <th class="sticky-col sort" data-key="id">名前</th>
 
           <th class="sort" data-key="element">属</th>
@@ -51,7 +51,7 @@
       </thead>
 
       <tbody id="mbsBody">
-        {{/* 初期表示は id 昇順 */}}
+        {{/* 初期表示：id 昇順 */}}
         {{ range sort $pages "Params.id" }}
           {{ $p := . }}
           {{ $st := $p.Params.status }}
@@ -86,7 +86,6 @@
 
             <td class="sticky-col name">
               <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
-              <span class="mbs-id">#{{ $p.Params.id }}</span>
             </td>
 
             <td>{{ $p.Params.element }}</td>
