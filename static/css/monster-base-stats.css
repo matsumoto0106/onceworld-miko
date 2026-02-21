@@ -5,6 +5,7 @@
 
 .mbs-controls { display: grid; gap: 8px; margin: 10px 0 10px; }
 .mbs-controls-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+.mbs-controls-row2 { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
 
 .mbs-search {
   width: 100%;
@@ -17,17 +18,50 @@
 .mbs-compact { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; opacity: .85; user-select: none; }
 .mbs-compact input { transform: translateY(1px); }
 
-.mbs-status { display: grid; gap: 4px; }
+.mbs-sortbox { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.mbs-label { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; opacity: .9; }
+.mbs-select { padding: 7px 8px; border: 1px solid rgba(0,0,0,.18); border-radius: 10px; font-size: 14px; background: #fff; }
+
+.mbs-btn, .mbs-btn2 {
+  border: 1px solid rgba(0,0,0,.18);
+  background: #fff;
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-size: 14px;
+}
+.mbs-btn2 { white-space: nowrap; }
+
 .mbs-sortstatus { font-size: 13px; opacity: .9; }
+
 .mbs-note { font-size: 12px; opacity: .75; }
 
+.mbs-filters {
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 12px;
+  padding: 10px;
+}
+.mbs-filters.is-closed { display: none; }
+
+.mbs-filter-grid { display: grid; gap: 10px; }
+@media (min-width: 700px) {
+  .mbs-filter-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.mbs-filter-block { border: 1px solid rgba(0,0,0,.12); border-radius: 10px; padding: 8px; }
+.mbs-filter-title { font-size: 12px; opacity: .8; margin-bottom: 6px; }
+.mbs-filter-items { display: grid; gap: 6px; }
+.mbs-check { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
+.mbs-check input { transform: translateY(1px); }
+
+.mbs-filter-actions { margin-top: 10px; display: flex; justify-content: flex-end; }
+
+/* ---- 表 ---- */
 .mbs-table-wrap {
   overflow: auto;
   border: 1px solid rgba(0,0,0,.14);
   border-radius: 12px;
 }
 
-/* ---- 表本体：枠組み（罫線）を強化 ---- */
+/* 枠組み（罫線） */
 .mbs-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -37,7 +71,10 @@
   line-height: 1.25;
 }
 
-/* 各セルの“枠”を作る */
+/* 表は“名前リンク以外クリック不可”にする */
+.mbs-table { pointer-events: none; }
+.mbs-table td.name a { pointer-events: auto; }
+
 .mbs-table th, .mbs-table td {
   padding: 8px 10px;
   white-space: nowrap;
@@ -46,7 +83,6 @@
 }
 .mbs-table tr > *:first-child { border-left: 1px solid rgba(0,0,0,.12); }
 
-/* ヘッダー */
 .mbs-table thead th {
   position: sticky;
   top: 0;
@@ -56,26 +92,17 @@
   border-bottom: 1px solid rgba(0,0,0,.18);
 }
 
-/* 並び替えUI */
-.mbs-table th.sort { cursor: pointer; user-select: none; }
-.mbs-table th.sort .arrow { margin-left: 4px; opacity: .35; font-size: 11px; }
-.mbs-table th.is-active .arrow { opacity: .95; }
-.mbs-table th.is-active { text-decoration: underline; text-underline-offset: 3px; }
-
 .mbs-table td.num, .mbs-table th.num { text-align: right; }
 
-/* ---- 順位列：3桁想定で最小化（通常） ---- */
+/* 順位列：最小化 */
 .rank-col {
   width: 30px;
   min-width: 30px;
   max-width: 30px;
-
   padding: 4px 4px;
   text-align: right;
-
   font-size: 12px;
   opacity: .85;
-
   font-variant-numeric: tabular-nums;
 }
 
@@ -94,18 +121,11 @@
 .mbs-table tr:hover td { background: rgba(0,0,0,.03); }
 .mbs-table tr:hover td.sticky-col { background: rgba(0,0,0,.03); }
 
-/* ---- コンパクトON：さらに順位列を詰める ---- */
+/* コンパクト */
 .mbs-compact-on .mbs-table { font-size: 12.5px; }
 .mbs-compact-on .mbs-table th,
 .mbs-compact-on .mbs-table td { padding: 6px 8px; }
-
-.mbs-compact-on .rank-col {
-  width: 26px;
-  min-width: 26px;
-  max-width: 26px;
-  padding: 2px 3px;
-}
-
+.mbs-compact-on .rank-col { width: 26px; min-width: 26px; max-width: 26px; padding: 2px 3px; }
 .mbs-compact-on .mbs-table td.name { min-width: 150px; }
 
 /* スマホ */
