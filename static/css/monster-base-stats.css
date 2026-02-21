@@ -37,20 +37,14 @@
   line-height: 1.25;
 }
 
-/* 各セルの“枠”を作る（列の区切りが見える） */
+/* 各セルの“枠”を作る */
 .mbs-table th, .mbs-table td {
   padding: 8px 10px;
   white-space: nowrap;
-
-  /* 罫線 */
   border-bottom: 1px solid rgba(0,0,0,.12);
   border-right: 1px solid rgba(0,0,0,.12);
 }
-
-/* 左端の縦罫線 */
-.mbs-table tr > *:first-child {
-  border-left: 1px solid rgba(0,0,0,.12);
-}
+.mbs-table tr > *:first-child { border-left: 1px solid rgba(0,0,0,.12); }
 
 /* ヘッダー */
 .mbs-table thead th {
@@ -59,12 +53,10 @@
   background: rgba(255,255,255,.96);
   backdrop-filter: blur(6px);
   z-index: 2;
-
-  /* ヘッダーは少し強く */
   border-bottom: 1px solid rgba(0,0,0,.18);
 }
 
-/* 並び替え表示 */
+/* 並び替えUI */
 .mbs-table th.sort { cursor: pointer; user-select: none; }
 .mbs-table th.sort .arrow { margin-left: 4px; opacity: .35; font-size: 11px; }
 .mbs-table th.is-active .arrow { opacity: .95; }
@@ -72,19 +64,22 @@
 
 .mbs-table td.num, .mbs-table th.num { text-align: right; }
 
-/* ---- 順位列を3桁想定で狭める ---- */
+/* ---- 順位列：3桁想定で最小化（通常） ---- */
 .rank-col {
-  width: 38px;              /* ←狭くする */
-  min-width: 38px;
-  max-width: 38px;
+  width: 30px;
+  min-width: 30px;
+  max-width: 30px;
+
+  padding: 4px 4px;
   text-align: right;
-  padding-left: 6px;        /* ←余白も削る */
-  padding-right: 6px;
+
+  font-size: 12px;
   opacity: .85;
-  font-variant-numeric: tabular-nums; /* 桁幅を揃えてブレなくする */
+
+  font-variant-numeric: tabular-nums;
 }
 
-/* 左固定：名前列だけ固定（枠線も維持） */
+/* 左固定：名前列のみ */
 .sticky-col {
   position: sticky;
   left: 0;
@@ -95,16 +90,22 @@
 
 .mbs-table td.name { min-width: 160px; }
 .mbs-table td.name a { text-decoration: none; }
-.mbs-id { display: inline-block; margin-left: 6px; font-size: 11px; opacity: .55; }
 
 .mbs-table tr:hover td { background: rgba(0,0,0,.03); }
 .mbs-table tr:hover td.sticky-col { background: rgba(0,0,0,.03); }
 
-/* ---- コンパクトON（さらに密度UP） ---- */
+/* ---- コンパクトON：さらに順位列を詰める ---- */
 .mbs-compact-on .mbs-table { font-size: 12.5px; }
 .mbs-compact-on .mbs-table th,
 .mbs-compact-on .mbs-table td { padding: 6px 8px; }
-.mbs-compact-on .rank-col { padding-left: 4px; padding-right: 4px; } /* さらに詰める */
+
+.mbs-compact-on .rank-col {
+  width: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  padding: 2px 3px;
+}
+
 .mbs-compact-on .mbs-table td.name { min-width: 150px; }
 
 /* スマホ */
