@@ -98,3 +98,134 @@ h1{
 .site-header .site-title a:hover{
   text-decoration: underline;
 }
+/* ===== 上部固定ヘッダー（タイトル中央＋ハンバーガー） ===== */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ヘッダー内の横並び：左(ダミー) / 中央(タイトル) / 右(ボタン) */
+.site-header-inner{
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 左右の幅を同じにして、タイトルを厳密に中央へ */
+.site-header-side{
+  width: 44px; /* ハンバーガーボタンと同じ幅 */
+  flex: 0 0 44px;
+}
+
+.site-title{
+  flex: 1 1 auto;
+  text-align: center;
+  line-height: 1;
+}
+
+.site-title a{
+  color: var(--fg);
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 1.05rem;
+  letter-spacing: .02em;
+}
+
+.site-title a:hover{
+  text-decoration: underline;
+}
+
+/* ハンバーガーボタン */
+.hamburger{
+  width: 44px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hamburger:active{
+  transform: translateY(1px);
+}
+
+.hamburger-bars{
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: var(--fg);
+  display: block;
+}
+
+.hamburger-bars::before,
+.hamburger-bars::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: var(--fg);
+}
+
+.hamburger-bars::before{ top: -6px; }
+.hamburger-bars::after{ top: 6px; }
+
+/* メニュー（右上からドロップ/ドロワー風） */
+.site-menu{
+  position: absolute;
+  right: 12px;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.site-menu a{
+  display: block;
+  padding: 10px 10px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--fg);
+  background: #fff;
+}
+
+.site-menu a:hover{
+  background: #f6f6f6;
+}
+
+/* 開いた状態 */
+.site-header.menu-open .site-menu{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* オーバーレイ（メニュー外タップで閉じる） */
+.menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.15);
+}
+
+/* メニュー中はスクロール抑制（スマホで便利） */
+.no-scroll{
+  overflow: hidden;
+}
