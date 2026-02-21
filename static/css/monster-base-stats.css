@@ -137,6 +137,15 @@
 
 .mbs-compact-on .mbs-table td.name { min-width: 150px; }
 
+/* TOTAL列を少し強調 */
+.mbs-table td[data-total],
+.mbs-table th[data-key="total"] {
+  background: rgba(0,0,0,0.03);
+}
+
+.mbs-table th[data-key="total"] {
+  font-weight: 600;
+}
 /* スマホ */
 @media (max-width: 600px) {
   .mbs-wrap { padding: 10px; }
