@@ -18,10 +18,6 @@
 .mbs-compact { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; opacity: .85; user-select: none; }
 .mbs-compact input { transform: translateY(1px); }
 
-.mbs-sortbox { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.mbs-label { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; opacity: .9; }
-.mbs-select { padding: 7px 8px; border: 1px solid rgba(0,0,0,.18); border-radius: 10px; font-size: 14px; background: #fff; }
-
 .mbs-btn, .mbs-btn2 {
   border: 1px solid rgba(0,0,0,.18);
   background: #fff;
@@ -32,7 +28,6 @@
 .mbs-btn2 { white-space: nowrap; }
 
 .mbs-sortstatus { font-size: 13px; opacity: .9; }
-
 .mbs-note { font-size: 12px; opacity: .75; }
 
 .mbs-filters {
@@ -51,7 +46,6 @@
 .mbs-filter-items { display: grid; gap: 6px; }
 .mbs-check { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
 .mbs-check input { transform: translateY(1px); }
-
 .mbs-filter-actions { margin-top: 10px; display: flex; justify-content: flex-end; }
 
 /* ---- 表 ---- */
@@ -61,7 +55,6 @@
   border-radius: 12px;
 }
 
-/* 枠組み（罫線） */
 .mbs-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -71,10 +64,7 @@
   line-height: 1.25;
 }
 
-/* 表は“名前リンク以外クリック不可”にする */
-.mbs-table { pointer-events: none; }
-.mbs-table td.name a { pointer-events: auto; }
-
+/* 枠組み（罫線） */
 .mbs-table th, .mbs-table td {
   padding: 8px 10px;
   white-space: nowrap;
@@ -92,14 +82,24 @@
   border-bottom: 1px solid rgba(0,0,0,.18);
 }
 
+/* 並び替えはヘッダーだけ触れる */
+.mbs-table thead th.sort { cursor: pointer; user-select: none; }
+.mbs-table thead th.sort .arrow { margin-left: 4px; opacity: .35; font-size: 11px; }
+.mbs-table thead th.is-active .arrow { opacity: .95; }
+.mbs-table thead th.is-active { text-decoration: underline; text-underline-offset: 3px; }
+
+/* 表本体（tbody）はクリック無効、名前リンクだけ有効 */
+.mbs-table tbody td { pointer-events: none; }
+.mbs-table tbody td.name a { pointer-events: auto; }
+
 .mbs-table td.num, .mbs-table th.num { text-align: right; }
 
-/* 順位列：最小化 */
+/* 順位列：少し広げる（3桁 + 余裕） */
 .rank-col {
-  width: 30px;
-  min-width: 30px;
-  max-width: 30px;
-  padding: 4px 4px;
+  width: 36px;
+  min-width: 36px;
+  max-width: 36px;
+  padding: 4px 6px;
   text-align: right;
   font-size: 12px;
   opacity: .85;
@@ -125,7 +125,14 @@
 .mbs-compact-on .mbs-table { font-size: 12.5px; }
 .mbs-compact-on .mbs-table th,
 .mbs-compact-on .mbs-table td { padding: 6px 8px; }
-.mbs-compact-on .rank-col { width: 26px; min-width: 26px; max-width: 26px; padding: 2px 3px; }
+
+.mbs-compact-on .rank-col {
+  width: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  padding: 2px 5px;
+}
+
 .mbs-compact-on .mbs-table td.name { min-width: 150px; }
 
 /* スマホ */
