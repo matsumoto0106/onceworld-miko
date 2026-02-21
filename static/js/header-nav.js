@@ -1,36 +1,30 @@
 (() => {
-  const header = document.getElementById("siteHeader");
-  if (!header) return;
+  const header = document.getElementById("owHeader");
+  const button = header?.querySelector(".ow-hamburger");
+  const menu = document.getElementById("owMenu");
+  const overlay = document.getElementById("owOverlay");
 
-  const button = header.querySelector(".hamburger");
-  const menu = document.getElementById("siteMenu");
-  const overlay = document.getElementById("menuOverlay");
-
-  if (!button || !menu || !overlay) return;
+  if (!header || !button || !menu || !overlay) return;
 
   const openMenu = () => {
     menu.hidden = false;
     overlay.hidden = false;
 
-    // アニメ開始用に次フレームでクラス付与
-    requestAnimationFrame(() => {
-      header.classList.add("menu-open");
-    });
+    requestAnimationFrame(() => header.classList.add("ow-menu-open"));
 
     button.setAttribute("aria-expanded", "true");
     button.setAttribute("aria-label", "メニューを閉じる");
-    document.body.classList.add("no-scroll");
+    document.body.classList.add("ow-no-scroll");
   };
 
   const closeMenu = () => {
-    header.classList.remove("menu-open");
+    header.classList.remove("ow-menu-open");
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-label", "メニューを開く");
-    document.body.classList.remove("no-scroll");
+    document.body.classList.remove("ow-no-scroll");
 
-    // アニメ終わりでhiddenに戻す
     window.setTimeout(() => {
-      if (!header.classList.contains("menu-open")) {
+      if (!header.classList.contains("ow-menu-open")) {
         menu.hidden = true;
         overlay.hidden = true;
       }
@@ -45,21 +39,18 @@
   button.addEventListener("click", toggleMenu);
   overlay.addEventListener("click", closeMenu);
 
-  // ESCで閉じる
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && button.getAttribute("aria-expanded") === "true") {
       closeMenu();
     }
   });
 
-  // 画面リサイズでメニューが変に残るのを防止
-  window.addEventListener("resize", () => {
-    if (button.getAttribute("aria-expanded") === "true") closeMenu();
-  });
-
-  // メニュー内リンク押したら閉じる
   menu.addEventListener("click", (e) => {
     const a = e.target.closest("a");
     if (a) closeMenu();
+  });
+
+  window.addEventListener("resize", () => {
+    if (button.getAttribute("aria-expanded") === "true") closeMenu();
   });
 })();
