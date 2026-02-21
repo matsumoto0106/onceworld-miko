@@ -4,7 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ site.Title }}</title>
+
+  <!-- 共通CSS -->
   <link rel="stylesheet" href="{{ "css/style.css?v=2" | relURL }}" />
+
+  <!-- ホーム専用CSS -->
+  {{ if .IsHome }}
+    <link rel="stylesheet" href="{{ "css/home.css?v=1" | relURL }}" />
+  {{ end }}
 </head>
 <body>
   {{ partial "header.html" . }}
