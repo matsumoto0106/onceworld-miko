@@ -50,7 +50,7 @@
     </div>
 
     <div class="mbs-note">
-      ※並び替えは「表の項目欄（ヘッダー）」だけタップで操作できます。表内は「名前リンク」以外クリック無効です。
+      ※並び替えは「表の項目欄（ヘッダー）」タップで操作できます。表内は「名前リンク」以外クリック無効です。
     </div>
   </section>
 
@@ -59,30 +59,46 @@
 
   <div class="mbs-table-wrap mbs-compact-on" id="mbsWrap" role="region" aria-label="モンスター基礎ステータス一覧（横スクロール可）" tabindex="0">
     <table class="mbs-table" id="mbsTable">
+      {{/* 列幅をHTML側で固定（CSSが上書きされても崩れにくい） */}}
+      <colgroup>
+        <col style="width:40px">
+        <col>
+        <col style="width:44px">
+        <col style="width:60px">
+        <col style="width:70px">
+        <col style="width:56px">
+        <col style="width:56px">
+        <col style="width:56px">
+        <col style="width:56px">
+        <col style="width:56px">
+        <col style="width:64px">
+        <col style="width:56px">
+        <col style="width:56px">
+      </colgroup>
+
       <thead>
         <tr>
           <th class="rank-col">順位</th>
 
-          {{/* 名前タップでも id ソート（五十音順に戻らない） */}}
-          <th class="sticky-col sort" data-key="id">名前</th>
+          {{/* 名前タップでも id ソート */}}
+          <th class="sticky-col sort" data-key="id" tabindex="0" role="button" aria-label="idで並び替え">名前</th>
 
-          <th class="sort" data-key="element">属</th>
-          <th class="sort" data-key="attack_type">攻</th>
-          <th class="sort" data-key="attack_range">射</th>
+          <th class="sort" data-key="element" tabindex="0" role="button">属</th>
+          <th class="sort" data-key="attack_type" tabindex="0" role="button">攻</th>
+          <th class="sort" data-key="attack_range" tabindex="0" role="button">射</th>
 
-          <th class="num sort" data-key="vit">VIT</th>
-          <th class="num sort" data-key="spd">SPD</th>
-          <th class="num sort" data-key="atk">ATK</th>
-          <th class="num sort" data-key="int">INT</th>
-          <th class="num sort" data-key="def">DEF</th>
-          <th class="num sort" data-key="mdef">MDEF</th>
-          <th class="num sort" data-key="luk">LUK</th>
-          <th class="num sort" data-key="mov">MOV</th>
+          <th class="num sort" data-key="vit" tabindex="0" role="button">VIT</th>
+          <th class="num sort" data-key="spd" tabindex="0" role="button">SPD</th>
+          <th class="num sort" data-key="atk" tabindex="0" role="button">ATK</th>
+          <th class="num sort" data-key="int" tabindex="0" role="button">INT</th>
+          <th class="num sort" data-key="def" tabindex="0" role="button">DEF</th>
+          <th class="num sort" data-key="mdef" tabindex="0" role="button">MDEF</th>
+          <th class="num sort" data-key="luk" tabindex="0" role="button">LUK</th>
+          <th class="num sort" data-key="mov" tabindex="0" role="button">MOV</th>
         </tr>
       </thead>
 
       <tbody id="mbsBody">
-        {{/* 初期表示：id 昇順 */}}
         {{ range sort $pages "Params.id" }}
           {{ $p := . }}
           {{ $st := $p.Params.status }}
