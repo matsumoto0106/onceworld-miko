@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ "css/style.css?v=2" | relURL }}" />
 </head>
 <body>
+  {{ partial "header.html" . }}
+
   <main>
     {{ block "main" . }}{{ end }}
   </main>
