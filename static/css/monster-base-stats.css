@@ -23,11 +23,11 @@
 
 .mbs-table-wrap {
   overflow: auto;
-  border: 1px solid rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.14);
   border-radius: 12px;
 }
 
-/* 情報量アップのため、標準はコンパクト寄り */
+/* ---- 表本体：枠組み（罫線）を強化 ---- */
 .mbs-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -37,21 +37,34 @@
   line-height: 1.25;
 }
 
+/* 各セルの“枠”を作る（列の区切りが見える） */
 .mbs-table th, .mbs-table td {
   padding: 8px 10px;
-  border-bottom: 1px solid rgba(0,0,0,.08);
   white-space: nowrap;
+
+  /* 罫線 */
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  border-right: 1px solid rgba(0,0,0,.12);
 }
 
+/* 左端の縦罫線 */
+.mbs-table tr > *:first-child {
+  border-left: 1px solid rgba(0,0,0,.12);
+}
+
+/* ヘッダー */
 .mbs-table thead th {
   position: sticky;
   top: 0;
-  background: rgba(255,255,255,.95);
+  background: rgba(255,255,255,.96);
   backdrop-filter: blur(6px);
   z-index: 2;
+
+  /* ヘッダーは少し強く */
+  border-bottom: 1px solid rgba(0,0,0,.18);
 }
 
-/* 並び替え表示（どの列か分かるように） */
+/* 並び替え表示 */
 .mbs-table th.sort { cursor: pointer; user-select: none; }
 .mbs-table th.sort .arrow { margin-left: 4px; opacity: .35; font-size: 11px; }
 .mbs-table th.is-active .arrow { opacity: .95; }
@@ -59,9 +72,19 @@
 
 .mbs-table td.num, .mbs-table th.num { text-align: right; }
 
-.rank-col { width: 52px; text-align: right; opacity: .85; }
+/* ---- 順位列を3桁想定で狭める ---- */
+.rank-col {
+  width: 38px;              /* ←狭くする */
+  min-width: 38px;
+  max-width: 38px;
+  text-align: right;
+  padding-left: 6px;        /* ←余白も削る */
+  padding-right: 6px;
+  opacity: .85;
+  font-variant-numeric: tabular-nums; /* 桁幅を揃えてブレなくする */
+}
 
-/* 左固定（順位は固定しない／名前だけ固定） */
+/* 左固定：名前列だけ固定（枠線も維持） */
 .sticky-col {
   position: sticky;
   left: 0;
@@ -77,13 +100,14 @@
 .mbs-table tr:hover td { background: rgba(0,0,0,.03); }
 .mbs-table tr:hover td.sticky-col { background: rgba(0,0,0,.03); }
 
-/* コンパクトON（さらに情報密度UP） */
+/* ---- コンパクトON（さらに密度UP） ---- */
 .mbs-compact-on .mbs-table { font-size: 12.5px; }
-.mbs-compact-on .mbs-table th, 
+.mbs-compact-on .mbs-table th,
 .mbs-compact-on .mbs-table td { padding: 6px 8px; }
+.mbs-compact-on .rank-col { padding-left: 4px; padding-right: 4px; } /* さらに詰める */
 .mbs-compact-on .mbs-table td.name { min-width: 150px; }
 
-/* スマホで特に見やすく */
+/* スマホ */
 @media (max-width: 600px) {
   .mbs-wrap { padding: 10px; }
   .mbs-title { font-size: 1.15rem; }
