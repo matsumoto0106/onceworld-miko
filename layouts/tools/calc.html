@@ -1,0 +1,11 @@
+{{ define "main" }}
+
+<h1>{{ .Title }}</h1>
+
+<!-- monsters-data.js を読み込む（生成済み） -->
+<script src="{{ "monsters-data.js" | relURL }}"></script>
+
+<!-- ここに統合計算機のUIを作っていく -->
+<div id="calc-app"></div>
+
+{{ end }}
