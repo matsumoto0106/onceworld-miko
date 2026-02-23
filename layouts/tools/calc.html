@@ -2,44 +2,37 @@
 
 <h1>{{ .Title }}</h1>
 
-<!-- monsters-data.js を読み込む（生成済み） -->
+<!-- monsters-data.js（MONSTERSを定義） -->
 <script src="{{ "monsters-data.js" | relURL }}"></script>
 
 <section>
   <h2>主人公ステータス</h2>
 
   <div class="hero-grid">
+    <div class="hero-row"><span class="hero-label">atk:</span><input id="hero-atk" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+    <div class="hero-row"><span class="hero-label">int:</span><input id="hero-int" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+    <div class="hero-row"><span class="hero-label">spd:</span><input id="hero-spd" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+    <div class="hero-row"><span class="hero-label">luk:</span><input id="hero-luk" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+    <div class="hero-row"><span class="hero-label">def:</span><input id="hero-def" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+    <div class="hero-row"><span class="hero-label">mdef:</span><input id="hero-mdef" type="number" inputmode="numeric" min="0" step="1" value="0"></div>
+  </div>
+</section>
 
-    <div class="hero-row">
-      <span class="hero-label">atk:</span>
-      <input id="hero-atk" type="number" inputmode="numeric" min="0" step="1" value="0">
+<section class="enemy-section">
+  <h2>モンスター</h2>
+
+  <div class="enemy-picker">
+    <div class="enemy-row">
+      <span class="enemy-label">name:</span>
+      <div class="enemy-input-wrap">
+        <input id="monster-search" type="text" placeholder="名前で検索して選択" autocomplete="off">
+        <div id="monster-suggest" class="suggest" hidden></div>
+      </div>
     </div>
 
-    <div class="hero-row">
-      <span class="hero-label">int:</span>
-      <input id="hero-int" type="number" inputmode="numeric" min="0" step="1" value="0">
+    <div class="enemy-selected" id="monster-selected" hidden>
+      選択中: <strong id="monster-selected-name"></strong>
     </div>
-
-    <div class="hero-row">
-      <span class="hero-label">spd:</span>
-      <input id="hero-spd" type="number" inputmode="numeric" min="0" step="1" value="0">
-    </div>
-
-    <div class="hero-row">
-      <span class="hero-label">luk:</span>
-      <input id="hero-luk" type="number" inputmode="numeric" min="0" step="1" value="0">
-    </div>
-
-    <div class="hero-row">
-      <span class="hero-label">def:</span>
-      <input id="hero-def" type="number" inputmode="numeric" min="0" step="1" value="0">
-    </div>
-
-    <div class="hero-row">
-      <span class="hero-label">mdef:</span>
-      <input id="hero-mdef" type="number" inputmode="numeric" min="0" step="1" value="0">
-    </div>
-
   </div>
 </section>
 
@@ -52,18 +45,15 @@
     gap: 12px;
     max-width: 720px;
   }
-
   .hero-row{
     display:flex;
     align-items:center;
     gap: 8px;
   }
-
   .hero-label{
     font-weight: 600;
     white-space: nowrap;
   }
-
   .hero-row input{
     flex: 1;
     min-width: 0;
@@ -75,13 +65,64 @@
     border-bottom: 1px solid #000;
     border-radius: 0;
   }
+
+  .enemy-section{ margin-top: 22px; }
+  .enemy-picker{ max-width: 720px; }
+
+  .enemy-row{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .enemy-label{
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .enemy-input-wrap{
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+  #monster-search{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .suggest{
+    position:absolute;
+    left:0; right:0;
+    top: calc(100% + 6px);
+    border: 1px solid #000;
+    border-radius: 10px;
+    background:#fff;
+    overflow:hidden;
+    max-height: 260px;
+    overflow-y: auto;
+    z-index: 20;
+  }
+  .suggest button{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+  }
+  .suggest button:active{
+    background: rgba(0,0,0,0.06);
+  }
+  .enemy-selected{
+    margin-top: 10px;
+  }
 </style>
 
 <script>
-  // 整数・0以上・空欄は0に戻す
+  // 主人公入力：整数・0以上・空欄は0
   (function () {
     const ids = ["hero-atk","hero-int","hero-spd","hero-luk","hero-def","hero-mdef"];
-
     function normalize(el){
       const raw = (el.value ?? "").toString().trim();
       if (raw === "") { el.value = "0"; return; }
@@ -89,12 +130,75 @@
       if (!Number.isFinite(n) || n < 0) { el.value = "0"; return; }
       el.value = String(n);
     }
-
     ids.forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       normalize(el);
       el.addEventListener("blur", () => normalize(el));
+    });
+  })();
+
+  // モンスター検索・選択（部分一致 / id昇順前提）
+  (function () {
+    const search = document.getElementById("monster-search");
+    const suggest = document.getElementById("monster-suggest");
+    const selectedBox = document.getElementById("monster-selected");
+    const selectedName = document.getElementById("monster-selected-name");
+
+    let picked = null;
+
+    function closeSuggest(){
+      suggest.hidden = true;
+      suggest.innerHTML = "";
+    }
+
+    function openSuggest(items){
+      suggest.hidden = false;
+      suggest.innerHTML = "";
+      items.forEach(m => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = m.title; // 表示は名前のみ
+        btn.addEventListener("click", () => {
+          picked = m;
+          search.value = m.title;
+          selectedName.textContent = m.title;
+          selectedBox.hidden = false;
+          closeSuggest();
+          // ここで次のUI（Lvや計算ボタン等）の有効化に繋げる予定
+        });
+        suggest.appendChild(btn);
+      });
+    }
+
+    function filterMonsters(q){
+      if (!Array.isArray(window.MONSTERS)) return [];
+      const query = (q ?? "").toString();
+      if (query.length === 0) return [];
+      // 部分一致（そのまま一致）
+      return window.MONSTERS.filter(m => (m.title ?? "").includes(query)).slice(0, 50);
+    }
+
+    search.addEventListener("input", () => {
+      const q = search.value;
+      const items = filterMonsters(q);
+      if (items.length === 0) closeSuggest();
+      else openSuggest(items);
+    });
+
+    // フォーカス時に再表示（入力があれば）
+    search.addEventListener("focus", () => {
+      const q = search.value;
+      const items = filterMonsters(q);
+      if (items.length === 0) closeSuggest();
+      else openSuggest(items);
+    });
+
+    // 外側タップで閉じる（スマホ向け）
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t === search || suggest.contains(t)) return;
+      closeSuggest();
     });
   })();
 </script>
