@@ -270,14 +270,9 @@
     function renderShortcuts(shortcuts){
       shortcutWrap.innerHTML = "";
       const arr = Array.isArray(shortcuts) ? shortcuts : [];
-      if (!picked){
-        // 未選択時は無効見せ（何も出さない）
-        return;
-      }
-      if (arr.length === 0){
-        // 何も無い場合は表示しない
-        return;
-      }
+      if (!picked) return;
+      if (arr.length === 0) return;
+
       arr.forEach(v => {
         const lv = Math.floor(Number(v));
         if (!Number.isFinite(lv) || lv < 1) return;
@@ -285,9 +280,8 @@
         btn.type = "button";
         btn.textContent = String(lv);
         btn.addEventListener("click", () => {
-          currentLv = lv;          // Lvは保持仕様
+          currentLv = lv;          // Lvは保持
           lvInput.value = String(lv);
-          // クリックは確定扱いで即更新
           enemyScaled = buildEnemyScaled(picked, currentLv);
           saveState();
         });
@@ -300,21 +294,20 @@
         selectedBox.hidden = true;
         selectedName.textContent = "";
         lvInput.disabled = true;
-        lvInput.value = "1";
+        lvInput.value = String(currentLv); // 表示は保持
         shortcutWrap.innerHTML = "";
         enemyScaled = null;
         return;
       }
+
       selectedName.textContent = picked.title;
       selectedBox.hidden = false;
 
       lvInput.disabled = false;
       lvInput.value = String(currentLv);
 
-      // shortcuts
       renderShortcuts(picked.level_shortcuts);
 
-      // 内部ステ更新（Lv確定扱い：ここでは既存Lvで作る）
       enemyScaled = buildEnemyScaled(picked, currentLv);
       saveState();
     }
@@ -329,7 +322,6 @@
         btn.addEventListener("click", () => {
           picked = m;
           search.value = m.title;
-          // Lvは保持（リセットしない）
           applyPickedUI();
           closeSuggest();
         });
@@ -337,18 +329,37 @@
       });
     }
 
+    function clearPicked(){
+      picked = null;
+      enemyScaled = null;
+      selectedBox.hidden = true;
+      selectedName.textContent = "";
+      lvInput.disabled = true;
+      lvInput.value = String(currentLv);   // Lvは保持
+      shortcutWrap.innerHTML = "";
+      saveState();
+    }
+
+    // ひら/カタゆれ対応（「すら」で「スライム」等）
+    function normalizeJP(s){
+      const str = (s ?? "").toString().trim().toLowerCase();
+      return str.replace(/[\u30A1-\u30F6]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+    }
+
     function filterMonsters(q){
       if (!Array.isArray(window.MONSTERS)) return [];
-      const query = (q ?? "").toString();
+      const query = normalizeJP(q);
       if (query.length === 0) return [];
-      return window.MONSTERS.filter(m => (m.title ?? "").includes(query)).slice(0, 50);
+      return window.MONSTERS
+        .filter(m => normalizeJP(m.title ?? "").includes(query))
+        .slice(0, 50);
     }
 
     // 初期：保存状態復元
     loadState();
     lvInput.value = String(currentLv);
 
-    // 保存のため、主人公入力のblurで保存
+    // 主人公入力のblurで保存
     ["hero-atk","hero-int","hero-spd","hero-luk","hero-def","hero-mdef"].forEach(id=>{
       const el = document.getElementById(id);
       if (!el) return;
@@ -371,19 +382,34 @@
       }catch(e){}
     })();
 
-    // 検索
+    // 検索（空欄でリセット）
     search.addEventListener("input", () => {
-      const items = filterMonsters(search.value);
+      const q = search.value;
+
+      if (q.trim() === "") {
+        clearPicked();
+        closeSuggest();
+        return;
+      }
+
+      // 選択済みなのに文字が変わったら選択解除
+      if (picked && q !== picked.title) {
+        clearPicked();
+      }
+
+      const items = filterMonsters(q);
       if (items.length === 0) closeSuggest();
       else openSuggest(items);
     });
 
+    // フォーカス時に候補再表示
     search.addEventListener("focus", () => {
       const items = filterMonsters(search.value);
       if (items.length === 0) closeSuggest();
       else openSuggest(items);
     });
 
+    // 外側タップで候補を閉じる
     document.addEventListener("click", (e) => {
       const t = e.target;
       if (t === search || suggest.contains(t)) return;
