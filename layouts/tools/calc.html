@@ -5,7 +5,90 @@
 <!-- monsters-data.js を読み込む（生成済み） -->
 <script src="{{ "monsters-data.js" | relURL }}"></script>
 
-<!-- ここに統合計算機のUIを作っていく -->
+<section>
+  <h2>主人公ステータス</h2>
+
+  <div class="hero-grid">
+    <label class="hero-field">
+      <span>atk</span>
+      <input id="hero-atk" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+
+    <label class="hero-field">
+      <span>int</span>
+      <input id="hero-int" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+
+    <label class="hero-field">
+      <span>spd</span>
+      <input id="hero-spd" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+
+    <label class="hero-field">
+      <span>luk</span>
+      <input id="hero-luk" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+
+    <label class="hero-field">
+      <span>def</span>
+      <input id="hero-def" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+
+    <label class="hero-field">
+      <span>mdef</span>
+      <input id="hero-mdef" type="number" inputmode="numeric" min="0" step="1" value="0">
+    </label>
+  </div>
+</section>
+
 <div id="calc-app"></div>
+
+<style>
+  .hero-grid{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 720px;
+  }
+  .hero-field{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+  }
+  .hero-field span{
+    font-weight: 600;
+  }
+  .hero-field input{
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+</style>
+
+<script>
+  // 整数・0以上・空欄は0に戻す
+  (function () {
+    const ids = ["hero-atk","hero-int","hero-spd","hero-luk","hero-def","hero-mdef"];
+
+    function normalize(el){
+      const raw = (el.value ?? "").toString().trim();
+      if (raw === "") { el.value = "0"; return; }
+      const n = Math.floor(Number(raw));
+      if (!Number.isFinite(n) || n < 0) { el.value = "0"; return; }
+      el.value = String(n);
+    }
+
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      // 初期も正規化
+      normalize(el);
+      // 確定時に0へ戻す
+      el.addEventListener("blur", () => normalize(el));
+      // 直接マイナス入力などの対策（入力中は邪魔しないが、離れたら矯正）
+    });
+  })();
+</script>
 
 {{ end }}
