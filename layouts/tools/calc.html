@@ -45,6 +45,15 @@
       <span class="enemy-label">Lv:</span>
       <input id="enemy-lv" class="lv-input" type="number" inputmode="numeric" min="1" step="1" value="1" disabled>
     </div>
+
+    <!-- 木魔法 / 闇魔法 -->
+    <div class="enemy-row mt">
+      <span class="enemy-label">magic:</span>
+      <div class="magic-buttons">
+        <button id="magic-wood" type="button" disabled>木魔法</button>
+        <button id="magic-dark" type="button" disabled>闇魔法</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -127,7 +136,6 @@
   .suggest button:active{ background: rgba(0,0,0,0.06); }
 
   .enemy-selected{ margin-top: 10px; }
-
   .mt{ margin-top: 12px; }
 
   .lv-shortcuts{
@@ -143,10 +151,6 @@
     border-radius: 10px;
     font-size: 14px;
   }
-  .lv-shortcuts button:disabled{
-    opacity: .4;
-  }
-
   .lv-input{
     flex: 1;
     min-width: 0;
@@ -154,6 +158,25 @@
     border: 1px solid #000;
     border-radius: 10px;
     font-size: 16px;
+  }
+
+  .magic-buttons{
+    display:flex;
+    gap: 10px;
+    flex: 1;
+  }
+  .magic-buttons button{
+    padding: 10px 12px;
+    border: 1px solid #000;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .magic-buttons button[aria-pressed="true"]{
+    background: rgba(0,0,0,0.08);
+  }
+  .magic-buttons button:disabled{
+    opacity: .4;
   }
 </style>
 
@@ -190,7 +213,14 @@
   function scaleStat(base, lv){
     return Math.floor(base * (1 + lv * 0.1));
   }
-  function buildEnemyScaled(monster, lv){
+  function buildEnemyScaled(monster, lv, magic){
+    // magic: { wood:boolean, dark:boolean }
+    const wood = !!magic?.wood;
+    const dark = !!magic?.dark;
+
+    const defScaled = scaleStat(monster.def, lv);
+    const lukScaled = scaleStat(monster.luk, lv);
+
     return {
       id: monster.id,
       title: monster.title,
@@ -199,14 +229,14 @@
       spd: scaleStat(monster.spd, lv),
       atk: scaleStat(monster.atk, lv),
       int: scaleStat(monster.int, lv),
-      def: scaleStat(monster.def, lv),
+      def: wood ? Math.floor(defScaled / 2) : defScaled,
       mdef: scaleStat(monster.mdef, lv),
-      luk: scaleStat(monster.luk, lv),
+      luk: dark ? Math.floor(lukScaled / 2) : lukScaled,
       level_shortcuts: Array.isArray(monster.level_shortcuts) ? monster.level_shortcuts : []
     };
   }
 
-  // ========== モンスター検索・選択 + level_shortcut + Lv入力 ==========
+  // ========== モンスター検索・選択 + level_shortcut + Lv入力 + 魔法 ==========
   (function () {
     const LS_KEY = "calc_state_v1";
 
@@ -218,9 +248,14 @@
     const lvInput = document.getElementById("enemy-lv");
     const shortcutWrap = document.getElementById("lv-shortcuts");
 
+    const woodBtn = document.getElementById("magic-wood");
+    const darkBtn = document.getElementById("magic-dark");
+
     let picked = null;
     let currentLv = 1;
     let enemyScaled = null;
+
+    const magic = { wood:false, dark:false };
 
     function saveState(){
       try{
@@ -234,9 +269,9 @@
         };
         const st = {
           monster_id: picked ? picked.id : "",
-          monster_title: picked ? picked.title : "",
           lv: currentLv,
-          hero
+          hero,
+          magic
         };
         localStorage.setItem(LS_KEY, JSON.stringify(st));
       }catch(e){}
@@ -247,6 +282,7 @@
         const raw = localStorage.getItem(LS_KEY);
         if (!raw) return;
         const st = JSON.parse(raw);
+
         if (st?.hero){
           const map = {
             "hero-atk":"atk","hero-int":"int","hero-spd":"spd","hero-luk":"luk","hero-def":"def","hero-mdef":"mdef"
@@ -259,12 +295,26 @@
           });
         }
         if (Number.isFinite(Number(st?.lv))) currentLv = Math.max(1, Math.floor(Number(st.lv)));
+        if (st?.magic){
+          magic.wood = !!st.magic.wood;
+          magic.dark = !!st.magic.dark;
+        }
       }catch(e){}
     }
 
     function closeSuggest(){
       suggest.hidden = true;
       suggest.innerHTML = "";
+    }
+
+    function setMagicButtonState(){
+      woodBtn.setAttribute("aria-pressed", magic.wood ? "true" : "false");
+      darkBtn.setAttribute("aria-pressed", magic.dark ? "true" : "false");
+    }
+
+    function enableMagicButtons(enabled){
+      woodBtn.disabled = !enabled;
+      darkBtn.disabled = !enabled;
     }
 
     function renderShortcuts(shortcuts){
@@ -280,9 +330,9 @@
         btn.type = "button";
         btn.textContent = String(lv);
         btn.addEventListener("click", () => {
-          currentLv = lv;          // Lvは保持
+          currentLv = lv;
           lvInput.value = String(lv);
-          enemyScaled = buildEnemyScaled(picked, currentLv);
+          enemyScaled = buildEnemyScaled(picked, currentLv, magic);
           saveState();
         });
         shortcutWrap.appendChild(btn);
@@ -294,9 +344,11 @@
         selectedBox.hidden = true;
         selectedName.textContent = "";
         lvInput.disabled = true;
-        lvInput.value = String(currentLv); // 表示は保持
+        lvInput.value = String(currentLv);
         shortcutWrap.innerHTML = "";
         enemyScaled = null;
+
+        enableMagicButtons(false);
         return;
       }
 
@@ -308,7 +360,10 @@
 
       renderShortcuts(picked.level_shortcuts);
 
-      enemyScaled = buildEnemyScaled(picked, currentLv);
+      enableMagicButtons(true);
+      setMagicButtonState();
+
+      enemyScaled = buildEnemyScaled(picked, currentLv, magic);
       saveState();
     }
 
@@ -318,7 +373,7 @@
       items.forEach(m => {
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.textContent = m.title; // 表示は名前のみ
+        btn.textContent = m.title;
         btn.addEventListener("click", () => {
           picked = m;
           search.value = m.title;
@@ -335,8 +390,10 @@
       selectedBox.hidden = true;
       selectedName.textContent = "";
       lvInput.disabled = true;
-      lvInput.value = String(currentLv);   // Lvは保持
+      lvInput.value = String(currentLv);
       shortcutWrap.innerHTML = "";
+
+      enableMagicButtons(false);
       saveState();
     }
 
@@ -358,6 +415,8 @@
     // 初期：保存状態復元
     loadState();
     lvInput.value = String(currentLv);
+    setMagicButtonState();
+    enableMagicButtons(false);
 
     // 主人公入力のblurで保存
     ["hero-atk","hero-int","hero-spd","hero-luk","hero-def","hero-mdef"].forEach(id=>{
@@ -392,7 +451,6 @@
         return;
       }
 
-      // 選択済みなのに文字が変わったら選択解除
       if (picked && q !== picked.title) {
         clearPicked();
       }
@@ -420,7 +478,24 @@
     lvInput.addEventListener("blur", () => {
       if (!picked) return;
       currentLv = normalizeLv(lvInput);
-      enemyScaled = buildEnemyScaled(picked, currentLv);
+      enemyScaled = buildEnemyScaled(picked, currentLv, magic);
+      saveState();
+    });
+
+    // 魔法トグル
+    woodBtn.addEventListener("click", () => {
+      if (!picked) return;
+      magic.wood = !magic.wood;
+      setMagicButtonState();
+      enemyScaled = buildEnemyScaled(picked, currentLv, magic);
+      saveState();
+    });
+
+    darkBtn.addEventListener("click", () => {
+      if (!picked) return;
+      magic.dark = !magic.dark;
+      setMagicButtonState();
+      enemyScaled = buildEnemyScaled(picked, currentLv, magic);
       saveState();
     });
   })();
