@@ -1,7 +1,7 @@
 +++
 title = "ホームタウン"
 weight = 30
-image = "map/hometown/hometown_kappa_map.png"
+image = "hometown/hometown_kappa_map.png"
 list = true
 +++
 
