@@ -4,7 +4,7 @@
 
 {{ with .Params.image }}
   <div class="map-image">
-    <img src="/img/map/{{ . }}" alt="{{ $.Title }}">
+    <img src="{{ printf "img/map/%s" . | relURL }}" alt="{{ $.Title }}">
   </div>
 {{ end }}
 
