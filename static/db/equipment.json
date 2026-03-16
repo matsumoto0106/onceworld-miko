@@ -1,31 +1,221 @@
 {
   "items": [
     {
-      "id": "azure_wand",
-      "name": "アズールワンド",
-      "category": "weapon",
-      "slot": "weapon",
-      "series": "",
-      "base_add": {
-        "vit": 0,
-        "spd": 0,
-        "atk": 0,
-        "int": 323,
-        "def": 0,
-        "mdef": 223,
-        "luk": 0,
-        "mov": 0
-      },
-      "base_rate": {
-        "vit": 0,
-        "spd": 0,
-        "atk": 0,
-        "int": 0,
-        "def": 0,
-        "mdef": 0,
-        "luk": 0,
-        "mov": 0
-      }
-    }
+      {
+  "id": "bare_hands",
+  "name": "素手",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":12,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "bronze_sword",
+  "name": "銅のつるぎ",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":9,"atk":27,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "iron_sword",
+  "name": "鉄の剣",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":89,"int":0,"def":18,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "elf_rod",
+  "name": "エルフロッド",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":5,"atk":0,"int":85,"def":0,"mdef":12,"luk":12,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "holy_spear",
+  "name": "ホーリースピア",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":151,"atk":151,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "dark_slasher",
+  "name": "ダークスラッシャー",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":20,"atk":5,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "demon_axe",
+  "name": "魔人の斧",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":433,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "sun_staff",
+  "name": "太陽の杖",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":315,"def":0,"mdef":0,"luk":150,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "holy_knight_sword",
+  "name": "聖騎士ソード",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":250,"atk":360,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "cloud_god_staff",
+  "name": "雲神杖",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":211,"int":311,"def":0,"mdef":0,"luk":71,"mov":1},
+  "base_rate": {}
+},
+{
+  "id": "berserk_saber",
+  "name": "バーサクサーベル",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":150,"spd":150,"atk":250,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "stardust_blade",
+  "name": "星屑ブレード",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":990,"int":0,"def":0,"mdef":0,"luk":490,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "nightmare_staff",
+  "name": "悪夢の杖",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":388,"spd":0,"atk":0,"int":688,"def":388,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "gear_seven",
+  "name": "神速剣ギアセブン",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":99,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":3},
+  "base_rate": {}
+},
+{
+  "id": "small_sword",
+  "name": "ちいさな剣",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":5,"atk":25,"int":0,"def":0,"mdef":0,"luk":5,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "frozen_staff",
+  "name": "凍てついた杖",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":25,"atk":0,"int":142,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "metal_hammer",
+  "name": "メタルハンマー",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":55,"spd":0,"atk":4,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "crimson_spear",
+  "name": "紅蓮槍",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":190,"atk":180,"int":0,"def":0,"mdef":0,"luk":110,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "magma_core_hammer",
+  "name": "マグマコア･ハンマー",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":255,"spd":0,"atk":55,"int":0,"def":0,"mdef":0,"luk":55,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "nyoi_bo",
+  "name": "如意棒",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":519,"atk":519,"int":0,"def":0,"mdef":0,"luk":219,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "magatsumi_staff",
+  "name": "邪悪杖マガツミ",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":888,"def":333,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "trident",
+  "name": "トライデント",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":7777,"int":0,"def":0,"mdef":0,"luk":77777,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "sacrifice_100",
+  "name": "生贄100",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":1000,"spd":0,"atk":0,"int":1000,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "amazing_hand",
+  "name": "すごいおてて",
+  "category": "weapon",
+  "slot": "weapon",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+}
   ]
 }
