@@ -1,16 +1,16 @@
+function getAssetBaseUrl() {
+  const s = document.currentScript;
+  if (!s?.src) return location.origin;
+  const u = new URL(s.src, location.href);
+  const basePath = u.pathname.replace(/\/js\/status-sim\.js$/, "");
+  return `${u.origin}${basePath}`;
+}
+
+const ASSET_BASE = getAssetBaseUrl();
+const EQUIP_URL = ASSET_BASE + "/db/equipment.json";
+const PET_URL = ASSET_BASE + "/db/pet_skills.json";
+
 document.addEventListener("DOMContentLoaded", async () => {
-  function getAssetBaseUrl() {
-    const s = document.currentScript;
-    if (!s || !s.src) return window.location.origin;
-    const u = new URL(s.src, window.location.href);
-    const basePath = u.pathname.replace(/\/js\/status-sim\.js$/, "");
-    return `${u.origin}${basePath}`;
-  }
-
-  const ASSET_BASE = getAssetBaseUrl();
-  const EQUIP_URL = ASSET_BASE + "/db/equipment.json";
-  const PET_URL = ASSET_BASE + "/db/pet_skills.json";
-
   const slots = {
     weapon: document.getElementById("select_weapon"),
     head: document.getElementById("select_head"),
@@ -48,16 +48,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const equipData = await equipRes.json();
     const equipmentDB = Array.isArray(equipData.items) ? equipData.items : [];
 
-    const weaponItems = equipmentDB.filter((i) => i.category === "weapon");
-    const armorItems = equipmentDB.filter((i) => i.category === "armor");
-    const accessoryItems = equipmentDB.filter((i) => i.category === "accessory");
+    fillSelect(slots.weapon, equipmentDB.filter((i) => i.category === "weapon"));
+    fillSelect(slots.head, equipmentDB.filter((i) => i.category === "armor" && i.slot === "head"));
+    fillSelect(slots.body, equipmentDB.filter((i) => i.category === "armor" && i.slot === "body"));
+    fillSelect(slots.hands, equipmentDB.filter((i) => i.category === "armor" && i.slot === "hands"));
+    fillSelect(slots.feet, equipmentDB.filter((i) => i.category === "armor" && i.slot === "feet"));
+    fillSelect(slots.shield, equipmentDB.filter((i) => i.category === "armor" && i.slot === "shield"));
 
-    fillSelect(slots.weapon, weaponItems);
-    fillSelect(slots.head, armorItems.filter((i) => i.slot === "head"));
-    fillSelect(slots.body, armorItems.filter((i) => i.slot === "body"));
-    fillSelect(slots.hands, armorItems.filter((i) => i.slot === "hands"));
-    fillSelect(slots.feet, armorItems.filter((i) => i.slot === "feet"));
-    fillSelect(slots.shield, armorItems.filter((i) => i.slot === "shield"));
+    const accessoryItems = equipmentDB.filter((i) => i.category === "accessory");
     slots.accessory.forEach((sel) => fillSelect(sel, accessoryItems));
   } catch (e) {
     console.error("equipment.json 読み込み失敗", e);
