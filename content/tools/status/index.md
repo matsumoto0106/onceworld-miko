@@ -2,7 +2,7 @@
 title = "主人公ステータス・シミュレーター"
 home = true
 weight = 30
-description = "主人公の装備・ペット・ステータスを確認できるシミュレーター"
+description = "ステータスをシミュレーションして理想のビルドを探そう！"
 +++
 
 <div class="status-sim">
