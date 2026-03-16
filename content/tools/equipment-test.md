@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   btn?.addEventListener("click", async () => {
     try {
       out.textContent = "読み込み中...";
-      const res = await fetch("/db/equipment.json", { cache: "no-store" });
+      const res = await fetch("../db/equipment.json", { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
