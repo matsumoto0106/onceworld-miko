@@ -43,11 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       out.textContent = "読み込み中...";
 
-      const res = await fetch("/db/equipment.json", { cache: "no-store" });
+      const base = window.location.origin + window.location.pathname.split("/tools")[0];
 
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
+      const url = base + "/db/equipment.json";
+
+      const res = await fetch(url, { cache: "no-store" });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
 
