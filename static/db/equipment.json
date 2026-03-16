@@ -287,6 +287,69 @@
   "series": "dragon",
   "base_add": {"vit":0,"spd":0,"atk":1050,"int":550,"def":0,"mdef":0,"luk":350,"mov":0},
   "base_rate": {}
+},
+    {
+  "id": "cloth_clothes",
+  "name": "布の服",
+  "category": "armor",
+  "slot": "body",
+  "series": "cloth",
+  "base_add": {"vit":11,"spd":0,"atk":0,"int":0,"def":5,"mdef":3,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "leather_clothes",
+  "name": "皮の服",
+  "category": "armor",
+  "slot": "body",
+  "series": "leather",
+  "base_add": {"vit":21,"spd":0,"atk":0,"int":0,"def":8,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "iron_armor",
+  "name": "鉄の鎧",
+  "category": "armor",
+  "slot": "body",
+  "series": "metal",
+  "base_add": {"vit":40,"spd":0,"atk":0,"int":0,"def":38,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "platinum_armor",
+  "name": "プラチナアーマー",
+  "category": "armor",
+  "slot": "body",
+  "series": "platinum",
+  "base_add": {"vit":115,"spd":0,"atk":0,"int":0,"def":40,"mdef":88,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "mage_robe",
+  "name": "魔道士ローブ",
+  "category": "armor",
+  "slot": "body",
+  "series": "mage",
+  "base_add": {"vit":88,"spd":0,"atk":0,"int":65,"def":38,"mdef":38,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "inferno_armor",
+  "name": "獄炎の鎧",
+  "category": "armor",
+  "slot": "body",
+  "series": "inferno",
+  "base_add": {"vit":188,"spd":0,"atk":0,"int":0,"def":131,"mdef":31,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "dragon_armor",
+  "name": "ドラゴンアーマー",
+  "category": "armor",
+  "slot": "body",
+  "series": "dragon",
+  "base_add": {"vit":750,"spd":0,"atk":0,"int":0,"def":650,"mdef":450,"luk":0,"mov":0},
+  "base_rate": {}
 }
   ]
 }
