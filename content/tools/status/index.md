@@ -365,6 +365,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     return out;
   }
+  function getArmorSetSeries(equipState) {
+  const keys = ["head", "body", "hands", "feet", "shield"];
+  let series = null;
+
+  for (const key of keys) {
+    const picked = equipState[key];
+    if (!picked?.id) return "";
+
+    const item = equipmentMap.get(String(picked.id));
+    if (!item) return "";
+
+    const s = String(item.series || "").trim();
+    if (!s) return "";
+
+    if (series === null) series = s;
+    if (series !== s) return "";
+  }
+
+  return series || "";
+  }
+
+  function applyArmorSetBonus(sumStats, enabled) {
+  if (!enabled) return { ...sumStats };
+
+  const out = zeroStats();
+  STATS.forEach((k) => {
+    if (k === "mov") out[k] = sumStats?.[k] || 0;
+    else out[k] = floorSafe((sumStats?.[k] || 0) * 1.1);
+  });
+  return out;
+  }
 
   function scaleAccessoryBaseAdd(baseAdd, lv) {
     const internal = clamp1(lv) - 1;
@@ -556,9 +587,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       petFinal = addStats(petFinal, summed.final);
     });
 
+    const armorSetSeries = getArmorSetSeries(state.equip);
+    const sumBeforeSet = addStats(basePlusProtein, weaponArmorSum);
+    const sumAfterSet = applyArmorSetBonus(sumBeforeSet, !!armorSetSeries);
+
     const equipDisplay = addStats(addStats(weaponArmorSum, accessoryFlat), petAdd);
 
-    const sumAfterFlat = addStats(addStats(basePlusProtein, weaponArmorSum), addStats(accessoryFlat, petAdd));
+    const sumAfterFlat = addStats(sumAfterSet, addStats(accessoryFlat, petAdd));
     const afterRate = applyRate(sumAfterFlat, addStats(accessoryRate, petMul));
     const finalTotal = roundStats(applyRate(afterRate, petFinal));
 
@@ -566,7 +601,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const remain = state.basePointTotal - used;
 
     if ($("basePointInfo")) {
-      $("basePointInfo").textContent = `使用 ${fmtSafe(used)} / 残り ${fmtSafe(remain)}`;
+      $("basePointInfo").textContent = armorSetSeries? `使用 $
+        {fmtSafe(used)} / 残り ${fmtSafe(remain)}（シリーズ補正O: `使用 ${fmtSafe(used)} / 残り $
+      {fmtSafe(remain)}`;
     }
 
     if (remain < 0) err.push(`ポイント超過：残り ${remain}`);
