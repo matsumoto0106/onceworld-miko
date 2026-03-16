@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     });
   } catch (e) {
-    console.error("pet_skills.json 読み込み失敗", e);
+    console.error("pet-skills.json 読み込み失敗", e);
   }
 });
 </script>
