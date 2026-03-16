@@ -1,0 +1,225 @@
+.status-sim {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.status-sim h1 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+}
+
+.status-sim h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.status-sim hr {
+  margin: 14px 0;
+  opacity: .4;
+}
+
+.status-sim * {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.note {
+  opacity: .8;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 12px;
+  background: rgba(0,0,0,.02);
+}
+
+.status-sim input[type="number"],
+.status-sim select {
+  border: 1px solid rgba(0,0,0,.18);
+  border-radius: 12px;
+  padding: 6px 10px;
+  background: #fff;
+}
+
+.status-sim select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.status-sim input[type="number"] {
+  width: 84px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 6px 0 8px;
+}
+
+.fold {
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 14px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,.01);
+  margin: 10px 0;
+}
+
+.fold > summary {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  padding: 4px 2px;
+}
+
+.fold[open] > summary {
+  margin-bottom: 8px;
+}
+
+.equip-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 6px 0 8px;
+}
+
+.equip-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 44px 120px;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 12px;
+  background: rgba(0,0,0,.02);
+}
+
+.equip-row .slot {
+  opacity: .85;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.equip-row .main {
+  min-width: 0;
+}
+
+.equip-row .main select {
+  width: 100%;
+}
+
+.equip-row .lvtag {
+  opacity: .65;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.equip-row .lvbox input,
+.equip-row .lvbox select {
+  width: 100%;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.status-sim button {
+  border: 1px solid rgba(0,0,0,.18);
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.status-sim button:hover {
+  background: rgba(0,0,0,.04);
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.stats-table th,
+.stats-table td {
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 8px 10px;
+}
+
+.stats-table th {
+  background: rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+.stats-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  margin: 8px 0 0;
+  color: #b00020;
+  white-space: pre-wrap;
+  display: none;
+}
+
+.error.is-visible {
+  display: block;
+}
+
+@media (max-width: 520px) {
+  .status-sim {
+    padding: 10px;
+  }
+
+  .status-sim input[type="number"] {
+    width: 96px;
+  }
+
+  .status-sim button {
+    width: 100%;
+  }
+
+  .equip-row {
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      "slot main"
+      "lvtag lvbox";
+    row-gap: 8px;
+  }
+
+  .equip-row .slot {
+    grid-area: slot;
+  }
+
+  .equip-row .main {
+    grid-area: main;
+  }
+
+  .equip-row .lvtag {
+    grid-area: lvtag;
+    text-align: left;
+    padding-left: 2px;
+  }
+
+  .equip-row .lvbox {
+    grid-area: lvbox;
+  }
+}
