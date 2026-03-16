@@ -1,16 +1,7 @@
-function getAssetBaseUrl() {
-  const s = document.currentScript;
-  if (!s?.src) return location.origin;
-  const u = new URL(s.src, location.href);
-  const basePath = u.pathname.replace(/\/js\/status-sim\.js$/, "");
-  return `${u.origin}${basePath}`;
-}
-
-const ASSET_BASE = getAssetBaseUrl();
-const EQUIP_URL = ASSET_BASE + "/db/equipment.json";
-const PET_URL = ASSET_BASE + "/db/pet_skills.json";
-
 document.addEventListener("DOMContentLoaded", async () => {
+  const EQUIP_URL = "../../db/equipment.json";
+  const PET_URL = "../../db/pet_skills.json";
+
   const slots = {
     weapon: document.getElementById("select_weapon"),
     head: document.getElementById("select_head"),
@@ -36,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!select) return;
     select.innerHTML = "";
     select.appendChild(new Option("（なし）", ""));
+
     items.forEach((item) => {
       select.appendChild(new Option(item.name, item.id));
     });
@@ -72,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!select) return;
       select.innerHTML = "";
       select.appendChild(new Option("（なし）", ""));
+
       petDB.forEach((p) => {
         select.appendChild(new Option(p.name, p.id));
       });
