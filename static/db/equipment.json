@@ -548,6 +548,374 @@
   "series": "dragon",
   "base_add": {"vit":0,"spd":350,"atk":850,"int":0,"def":350,"mdef":0,"luk":0,"mov":6},
   "base_rate": {}
+},
+    {
+  "id": "life_formula",
+  "name": "命脈の科学式",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":155,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"vit","initial":155,"max":1690}
+  ]
+},
+{
+  "id": "heartbeat_core",
+  "name": "鼓動核",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":15,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"vit","initial":"15%","max":"59.9%"}
+  ]
+},
+{
+  "id": "wind_crest",
+  "name": "ウィンドクレスト",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":135,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"spd","initial":135,"max":1472}
+  ]
+},
+{
+  "id": "sen_ga_star",
+  "name": "閃牙星",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":15,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"spd","initial":"15%","max":"59.9%"}
+  ]
+},
+{
+  "id": "blood_tonic",
+  "name": "ブラッドトニック",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":90,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":5,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"atk","initial":90,"max":981},
+    {"type":"rate","target":"atk","initial":"5%","max":"10.0%"}
+  ]
+},
+{
+  "id": "power_bottle",
+  "name": "力瓶",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":20,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"atk","initial":"20%","max":"79.8%"}
+  ]
+},
+{
+  "id": "arc_grimoire",
+  "name": "アークグリモワール",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":30,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":25,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"int","initial":30,"max":327},
+    {"type":"rate","target":"int","initial":"25%","max":"49.8%"}
+  ]
+},
+{
+  "id": "creation_orb",
+  "name": "創胎珠",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":20,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"int","initial":"20%","max":"79.8%"}
+  ]
+},
+{
+  "id": "force_module",
+  "name": "フォースモジュール",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":80,"mdef":90,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"def","initial":80,"max":872},
+    {"type":"flat","target":"mdef","initial":90,"max":981}
+  ]
+},
+{
+  "id": "knights_mind",
+  "name": "騎士の心得",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":15,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"def","initial":"15%","max":"59.9%"}
+  ]
+},
+{
+  "id": "meijin_jin",
+  "name": "迷盾陣",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":50,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"def","initial":"50%","max":"199.5%"}
+  ]
+},
+{
+  "id": "magi_bind",
+  "name": "マギバインド",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":25,"luk":0,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"rate","target":"mdef","initial":"25%","max":"49.8%"}
+  ]
+},
+{
+  "id": "barrier_storm",
+  "name": "結界嵐",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":15,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"mdef","initial":"15%","max":"59.9%"}
+  ]
+},
+{
+  "id": "hexa_skull",
+  "name": "ヘキサスカル",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":50,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"rate","target":"mdef","initial":"50%","max":"1.995"}
+  ]
+},
+{
+  "id": "lucky_trump",
+  "name": "ラッキートランプ",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":99,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":15,"mov":0},
+  "max_level": 100,
+  "display_effects": [
+    {"type":"flat","target":"luk","initial":99,"max":1079},
+    {"type":"rate","target":"luk","initial":"15%","max":"29.9%"}
+  ]
+},
+{
+  "id": "fate_eye",
+  "name": "運命眼",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":25,"mov":0},
+  "max_level": 30,
+  "display_effects": [
+    {"type":"rate","target":"luk","initial":"25%","max":"32.3%"}
+  ]
+},
+{
+  "id": "gallop_talisman",
+  "name": "ギャロップタリスマン",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":2},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 1,
+  "display_effects": [
+    {"type":"flat","target":"mov","initial":2,"max":2}
+  ]
+},
+{
+  "id": "jibakushin",
+  "name": "慈縛心",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 1000,
+  "display_effects": [
+    {"type":"special","target":"recovery","initial":100,"max":20080}
+  ]
+},
+{
+  "id": "memorial_page",
+  "name": "メモリアルページ",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"exp","initial":"30%","max":"119.7%"}
+  ]
+},
+{
+  "id": "sages_cup",
+  "name": "賢者の盃",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"exp","initial":"50%","max":"199.5%"}
+  ]
+},
+{
+  "id": "expedia_compass",
+  "name": "エクスペディアコンパス",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"exp","initial":"100%","max":"399.0%"}
+  ]
+},
+{
+  "id": "chiyou_hai",
+  "name": "知耀杯",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"exp","initial":"180%","max":"718.2%"}
+  ]
+},
+{
+  "id": "tame_mask",
+  "name": "テイムマスク",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"capture","initial":"30%","max":"119.7%"}
+  ]
+},
+{
+  "id": "miyuu_hai",
+  "name": "魅誘盃",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"capture","initial":"50%","max":"199.5%"}
+  ]
+},
+{
+  "id": "contact_letter",
+  "name": "コンタクトレター",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"capture","initial":"80%","max":"319.2%"}
+  ]
+},
+{
+  "id": "soul_chain",
+  "name": "拘魂鎖",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"capture","initial":"100%","max":"399.0%"}
+  ]
+},
+{
+  "id": "orbital_ring",
+  "name": "オービタルリング",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"drop","initial":"30%","max":"119.7%"}
+  ]
+},
+{
+  "id": "search_unit",
+  "name": "収索機",
+  "category": "accessory",
+  "slot": "accessory",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "max_level": 300,
+  "display_effects": [
+    {"type":"special_rate","target":"drop","initial":"50%","max":"199.5%"}
+  ]
 }
   ]
 }
