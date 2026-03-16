@@ -350,6 +350,204 @@
   "series": "dragon",
   "base_add": {"vit":750,"spd":0,"atk":0,"int":0,"def":650,"mdef":450,"luk":0,"mov":0},
   "base_rate": {}
+},
+    {
+  "id": "no_shield",
+  "name": "未装備",
+  "category": "armor",
+  "slot": "shield",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "leather_shield",
+  "name": "皮の盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "leather",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":15,"mdef":14,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "iron_shield",
+  "name": "鉄の盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "metal",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":70,"mdef":33,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "platinum_shield",
+  "name": "プラチナの盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "platinum",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":130,"mdef":109,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "mage_shield",
+  "name": "魔道士の盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "mage",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":55,"def":25,"mdef":155,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "inferno_shield",
+  "name": "獄炎の盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "inferno",
+  "base_add": {"vit":0,"spd":0,"atk":155,"int":0,"def":155,"mdef":155,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "dragon_shield",
+  "name": "ドラゴンの盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "dragon",
+  "base_add": {"vit":0,"spd":0,"atk":850,"int":0,"def":550,"mdef":550,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "tyrant_shield",
+  "name": "暴君盾",
+  "category": "armor",
+  "slot": "shield",
+  "series": "",
+  "base_add": {"vit":99000,"spd":0,"atk":99000,"int":0,"def":99000,"mdef":99000,"luk":0,"mov":0},
+  "base_rate": {}
+},
+    {
+  "id": "no_gloves",
+  "name": "未装備",
+  "category": "armor",
+  "slot": "hands",
+  "series": "",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "leather_gloves",
+  "name": "皮の手袋",
+  "category": "armor",
+  "slot": "hands",
+  "series": "leather",
+  "base_add": {"vit":0,"spd":11,"atk":0,"int":0,"def":0,"mdef":0,"luk":13,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "iron_gauntlets",
+  "name": "鉄の小手",
+  "category": "armor",
+  "slot": "hands",
+  "series": "metal",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":23,"mdef":23,"luk":23,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "platinum_arm",
+  "name": "プラチナアーム",
+  "category": "armor",
+  "slot": "hands",
+  "series": "platinum",
+  "base_add": {"vit":0,"spd":79,"atk":0,"int":0,"def":0,"mdef":0,"luk":125,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "mage_gauntlet",
+  "name": "魔道士のガントレット",
+  "category": "armor",
+  "slot": "hands",
+  "series": "mage",
+  "base_add": {"vit":0,"spd":57,"atk":0,"int":57,"def":0,"mdef":45,"luk":0,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "inferno_arm",
+  "name": "獄炎アーム",
+  "category": "armor",
+  "slot": "hands",
+  "series": "inferno",
+  "base_add": {"vit":0,"spd":200,"atk":0,"int":0,"def":0,"mdef":0,"luk":130,"mov":0},
+  "base_rate": {}
+},
+{
+  "id": "dragon_bracer",
+  "name": "ドラゴンブレイサー",
+  "category": "armor",
+  "slot": "hands",
+  "series": "dragon",
+  "base_add": {"vit":0,"spd":1250,"atk":0,"int":0,"def":0,"mdef":0,"luk":350,"mov":0},
+  "base_rate": {}
+},
+    {
+  "id": "basic_shoes",
+  "name": "ただのくつ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "",
+  "base_add": {"vit":0,"spd":5,"atk":0,"int":0,"def":0,"mdef":0,"luk":0,"mov":4},
+  "base_rate": {}
+},
+{
+  "id": "leather_shoes",
+  "name": "皮のシューズ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "leather",
+  "base_add": {"vit":0,"spd":16,"atk":0,"int":0,"def":11,"mdef":0,"luk":0,"mov":5},
+  "base_rate": {}
+},
+{
+  "id": "iron_boots",
+  "name": "鉄のブーツ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "metal",
+  "base_add": {"vit":0,"spd":0,"atk":0,"int":0,"def":41,"mdef":11,"luk":11,"mov":3},
+  "base_rate": {}
+},
+{
+  "id": "platinum_boots",
+  "name": "プラチナブーツ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "platinum",
+  "base_add": {"vit":0,"spd":53,"atk":0,"int":0,"def":25,"mdef":75,"luk":0,"mov":6},
+  "base_rate": {}
+},
+{
+  "id": "mage_shoes",
+  "name": "魔道士の靴",
+  "category": "armor",
+  "slot": "feet",
+  "series": "mage",
+  "base_add": {"vit":0,"spd":70,"atk":0,"int":0,"def":50,"mdef":63,"luk":0,"mov":5},
+  "base_rate": {}
+},
+{
+  "id": "inferno_boots",
+  "name": "獄炎ブーツ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "inferno",
+  "base_add": {"vit":0,"spd":140,"atk":170,"int":0,"def":90,"mdef":0,"luk":0,"mov":5},
+  "base_rate": {}
+},
+{
+  "id": "dragon_leg",
+  "name": "ドラゴンレッグ",
+  "category": "armor",
+  "slot": "feet",
+  "series": "dragon",
+  "base_add": {"vit":0,"spd":350,"atk":850,"int":0,"def":350,"mdef":0,"luk":0,"mov":6},
+  "base_rate": {}
 }
   ]
 }
