@@ -96,7 +96,6 @@
   min-width: 68px;
 }
 
-/* 防具の部位・シリーズ列は中央寄せ */
 #tab-armor th:nth-child(2),
 #tab-armor td:nth-child(2),
 #tab-armor th:nth-child(3),
@@ -105,29 +104,47 @@
   min-width: 72px;
 }
 
-/* アクセ専用表 */
+/* アクセ専用 */
+.accessory-list-table {
+  width: 100%;
+  min-width: 100%;
+}
+
+.accessory-list-table th,
+.accessory-list-table td {
+  white-space: normal;
+}
+
+.accessory-list-table th:first-child,
+.accessory-list-table td:first-child {
+  min-width: 180px;
+}
+
 .accessory-list-table th:nth-child(2),
-.accessory-list-table td:nth-child(2),
+.accessory-list-table td:nth-child(2) {
+  min-width: 120px;
+  text-align: left;
+}
+
 .accessory-list-table th:nth-child(3),
 .accessory-list-table td:nth-child(3) {
+  min-width: 220px;
   text-align: left;
-  min-width: 280px;
-  white-space: normal;
 }
 
 .accessory-list-table th:nth-child(4),
 .accessory-list-table td:nth-child(4) {
-  text-align: center;
   min-width: 90px;
+  text-align: center;
 }
 
-.accessory-list-table td.acc-name {
-  min-width: 170px;
+.accessory-list-table td.acc-effect div,
+.accessory-list-table td.acc-value div {
+  line-height: 1.5;
 }
 
-.accessory-list-table td.acc-effect,
-.accessory-list-table td.acc-max {
-  line-height: 1.45;
+.accessory-list-table td.acc-level {
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
@@ -157,10 +174,18 @@
     min-width: 60px;
   }
 
+  .accessory-list-table th:first-child,
+  .accessory-list-table td:first-child {
+    min-width: 150px;
+  }
+
   .accessory-list-table th:nth-child(2),
-  .accessory-list-table td:nth-child(2),
+  .accessory-list-table td:nth-child(2) {
+    min-width: 100px;
+  }
+
   .accessory-list-table th:nth-child(3),
   .accessory-list-table td:nth-child(3) {
-    min-width: 220px;
+    min-width: 180px;
   }
 }
