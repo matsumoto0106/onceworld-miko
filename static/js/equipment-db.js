@@ -26,74 +26,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     dragon: "ドラゴン"
   };
 
+  const statLabelMap = {
+    vit: "VIT",
+    spd: "SPD",
+    atk: "ATK",
+    int: "INT",
+    def: "DEF",
+    mdef: "MDEF",
+    luk: "LUK",
+    mov: "MOV",
+    exp: "EXP",
+    drop: "ドロップ",
+    capture: "捕獲",
+    recovery: "回復"
+  };
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       tabs.forEach((t) => t.classList.remove("active"));
       tables.forEach((t) => t.classList.remove("active"));
-
       tab.classList.add("active");
-      const target = tab.dataset.tab;
-      document.getElementById("tab-" + target)?.classList.add("active");
+      document.getElementById("tab-" + tab.dataset.tab)?.classList.add("active");
     });
   });
 
   function getBaseUrl() {
     return window.location.origin + window.location.pathname.split("/equipment")[0];
-  }
-
-  function fmtStatKey(key) {
-    return String(key || "").toUpperCase().replace("MDEF", "MDEF");
-  }
-
-  function buildNormalEffectText(item) {
-    const parts = [];
-
-    for (const stat of statList) {
-      const add = Number(item.base_add?.[stat] ?? 0);
-      const rate = Number(item.base_rate?.[stat] ?? 0);
-
-      if (add !== 0) {
-        parts.push(`${fmtStatKey(stat)}+${add}`);
-      }
-      if (rate !== 0) {
-        parts.push(`${fmtStatKey(stat)}+${rate}%`);
-      }
-    }
-
-    return parts.join(" / ");
-  }
-
-  function buildDisplayEffects(item) {
-    const effects = Array.isArray(item.display_effects) ? item.display_effects : [];
-    if (!effects.length) return null;
-
-    const initialParts = [];
-    const maxParts = [];
-
-    effects.forEach((ef) => {
-      const type = ef.type || "";
-      const targetRaw = String(ef.target || "");
-      const target = targetRaw === "mdef" ? "MDEF" : targetRaw.toUpperCase();
-
-      if (type === "flat") {
-        initialParts.push(`${target}+${ef.initial}`);
-        maxParts.push(`${target}+${ef.max}`);
-      } else if (type === "rate") {
-        initialParts.push(`${target}+${ef.initial}`);
-        maxParts.push(`${target}+${ef.max}`);
-      } else if (type === "special") {
-        initialParts.push(`${target}+${ef.initial}`);
-        maxParts.push(`${target}+${ef.max}`);
-      } else if (type === "special_rate") {
-        initialParts.push(`${target}+${ef.initial}`);
-        maxParts.push(`${target}+${ef.max}`);
-      }
-    });
-
-    return {
-      initial: initialParts.join(" / "),
-      max: maxParts.join(" / ")
-    };
   }
 
   function appendWeaponRow(item) {
@@ -138,36 +96,81 @@ document.addEventListener("DOMContentLoaded", async () => {
     armorBody?.appendChild(tr);
   }
 
+  function buildAccessoryLines(item) {
+    const effects = Array.isArray(item.display_effects) ? item.display_effects : [];
+    const effectNames = [];
+    const effectValues = [];
+
+    if (effects.length > 0) {
+      effects.forEach((ef) => {
+        const target = statLabelMap[String(ef.target || "").toLowerCase()] || String(ef.target || "");
+
+        if (ef.type === "flat") {
+          effectNames.push(target);
+          effectValues.push(`${ef.initial} → ${ef.max}`);
+        } else if (ef.type === "rate") {
+          effectNames.push(`*${target}`);
+          effectValues.push(`${ef.initial} → ${ef.max}`);
+        } else if (ef.type === "special") {
+          effectNames.push(target);
+          effectValues.push(`${ef.initial} → ${ef.max}`);
+        } else if (ef.type === "special_rate") {
+          effectNames.push(`*${target}`);
+          effectValues.push(`${ef.initial} → ${ef.max}`);
+        }
+      });
+
+      return {
+        names: effectNames,
+        values: effectValues
+      };
+    }
+
+    statList.forEach((stat) => {
+      const add = Number(item.base_add?.[stat] ?? 0);
+      const rate = Number(item.base_rate?.[stat] ?? 0);
+
+      if (add !== 0) {
+        effectNames.push(statLabelMap[stat]);
+        effectValues.push(String(add));
+      }
+      if (rate !== 0) {
+        effectNames.push(`*${statLabelMap[stat]}`);
+        effectValues.push(`${rate}%`);
+      }
+    });
+
+    return {
+      names: effectNames,
+      values: effectValues
+    };
+  }
+
   function appendAccessoryRow(item) {
     const tr = document.createElement("tr");
 
     const nameTd = document.createElement("td");
     nameTd.className = "acc-name";
     nameTd.textContent = item.name || "";
-    tr.appendChild(nameTd);
 
     const effectTd = document.createElement("td");
     effectTd.className = "acc-effect";
 
-    const maxTd = document.createElement("td");
-    maxTd.className = "acc-max";
+    const valueTd = document.createElement("td");
+    valueTd.className = "acc-value";
 
     const levelTd = document.createElement("td");
     levelTd.className = "acc-level";
     levelTd.textContent = item.max_level ? `Lv.${item.max_level}` : "";
 
-    const displayEffects = buildDisplayEffects(item);
+    const lines = buildAccessoryLines(item);
 
-    if (displayEffects) {
-      effectTd.textContent = displayEffects.initial;
-      maxTd.textContent = displayEffects.max;
-    } else {
-      effectTd.textContent = buildNormalEffectText(item);
-      maxTd.textContent = "";
-    }
+    effectTd.innerHTML = lines.names.map(v => `<div>${v}</div>`).join("");
+    valueTd.innerHTML = lines.values.map(v => `<div>${v}</div>`).join("");
 
+    tr.appendChild(nameTd);
     tr.appendChild(effectTd);
-    tr.appendChild(maxTd);
+    tr.appendChild(valueTd);
     tr.appendChild(levelTd);
 
     accessoryBody?.appendChild(tr);
