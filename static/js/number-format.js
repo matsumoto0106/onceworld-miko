@@ -1,22 +1,22 @@
 (() => {
-  const isNumericText = (s) => /^-?\d+(\.\d+)?$/.test(s);
+  const isNumericText = (s) => /^-?\d+(\.\d+)?$/.test(String(s).trim());
+
+  const formatValue = (value) => {
+    const num = Number(value);
+    if (!Number.isFinite(num)) return String(value ?? "");
+
+    if (Number.isInteger(num)) {
+      return num.toLocaleString("ja-JP");
+    }
+    return String(num);
+  };
 
   const formatNode = (el) => {
     const raw = (el.textContent || "").trim();
     if (!raw) return;
-
-    // すでに "1,000" などになっているものは対象外（数値判定に通らない）
     if (!isNumericText(raw)) return;
 
-    const num = Number(raw);
-    if (!Number.isFinite(num)) return;
-
-    // 整数だけカンマ（小数はそのまま）
-    if (Number.isInteger(num)) {
-      el.textContent = num.toLocaleString("ja-JP");
-    } else {
-      el.textContent = String(num);
-    }
+    el.textContent = formatValue(raw);
   };
 
   const formatAll = (root) => {
@@ -25,6 +25,7 @@
   };
 
   window.formatNumbers = formatAll;
+  window.fmt = formatValue;
 
   document.addEventListener("DOMContentLoaded", () => formatAll(document));
   window.addEventListener("load", () => formatAll(document));
