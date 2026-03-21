@@ -112,15 +112,21 @@
   min-width:0 !important;
 }
 
-/* 長い項目名は広く使う */
+/* 長い項目名の行 */
 #analysis-book-row,
 #analysis-book-advanced-row{
   grid-column:1 / -1;
 }
 
+/* スマホで被らないように十分広く取る */
+#analysis-book-row .hero-label{
+  min-width:96px;
+  flex:0 0 96px;
+}
+
 #analysis-book-advanced-row .hero-label{
-  min-width:140px;
-  flex:0 0 140px;
+  min-width:170px;
+  flex:0 0 170px;
 }
 
 .mode-panels{
@@ -301,6 +307,16 @@
 
   .hero-grid{
     grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+  #analysis-book-row .hero-label{
+    min-width:110px;
+    flex:0 0 110px;
+  }
+
+  #analysis-book-advanced-row .hero-label{
+    min-width:180px;
+    flex:0 0 180px;
   }
 
   .result-row{
