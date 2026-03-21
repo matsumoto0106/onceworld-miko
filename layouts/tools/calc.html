@@ -179,30 +179,71 @@
 <div id="calc-app"></div>
 
 <script>
+  function normalizeFormattedNonNegIntValue(raw, fallback = 0){
+    const s = (raw ?? "").toString().replace(/,/g, "").trim();
+    if (s === "") return String(fallback);
+    const n = Math.floor(Number(s));
+    if (!Number.isFinite(n) || n < 0) return String(fallback);
+    return String(n);
+  }
+
+  function parseFormattedInt(el, fallback = 0){
+    if (!el) return fallback;
+    const s = normalizeFormattedNonNegIntValue(el.value, fallback);
+    const n = Math.floor(Number(s));
+    if (!Number.isFinite(n)) return fallback;
+    return n;
+  }
+
+  function formatIntString(value){
+    const n = Math.floor(Number(value));
+    if (!Number.isFinite(n)) return "0";
+    return n.toLocaleString("ja-JP");
+  }
+
+  function applyCommaFormatting(el, fallback = 0){
+    if (!el) return;
+    const normalized = normalizeFormattedNonNegIntValue(el.value, fallback);
+    el.value = formatIntString(normalized);
+  }
+
+  function removeCommaFormatting(el, fallback = 0){
+    if (!el) return;
+    el.value = normalizeFormattedNonNegIntValue(el.value, fallback);
+  }
+
+  // ========== 主人公・入力欄のカンマ表示 ==========
   (function () {
-    const ids = ["hero-atk","hero-int","hero-spd","analysis-book","analysis-book-advanced"];
-    function normalizeNonNegInt(el){
-      const raw = (el.value ?? "").toString().trim();
-      if (raw === "") { el.value = "0"; return; }
-      const n = Math.floor(Number(raw));
-      if (!Number.isFinite(n) || n < 0) { el.value = "0"; return; }
-      el.value = String(n);
-    }
-    ids.forEach(id => {
+    const defs = [
+      { id: "hero-atk", fallback: 0 },
+      { id: "hero-int", fallback: 0 },
+      { id: "hero-spd", fallback: 0 },
+      { id: "analysis-book", fallback: 0 },
+      { id: "analysis-book-advanced", fallback: 0 },
+      { id: "enemy-lv", fallback: 1 }
+    ];
+
+    defs.forEach(({ id, fallback }) => {
       const el = document.getElementById(id);
       if (!el) return;
-      normalizeNonNegInt(el);
-      el.addEventListener("blur", () => normalizeNonNegInt(el));
+
+      applyCommaFormatting(el, fallback);
+
+      el.addEventListener("focus", () => {
+        removeCommaFormatting(el, fallback);
+      });
+
+      el.addEventListener("blur", () => {
+        applyCommaFormatting(el, fallback);
+      });
     });
   })();
 
   function normalizeLv(el){
-    const raw = (el.value ?? "").toString().trim();
-    if (raw === "") { el.value = "1"; return 1; }
-    const n = Math.floor(Number(raw));
-    if (!Number.isFinite(n) || n < 1) { el.value = "1"; return 1; }
-    el.value = String(n);
-    return n;
+    const n = parseFormattedInt(el, 1);
+    const v = Math.max(1, n);
+    el.value = formatIntString(v);
+    return v;
   }
 
   function fmt(n){
@@ -255,6 +296,7 @@
     const max = Math.floor(base * 1.1 * hits);
     return { min: Math.max(0, min), max: Math.max(0, max), base };
   }
+
   function formatMinMax(min, max){
     return `${fmt(min)}～${fmt(max)}`;
   }
@@ -480,11 +522,11 @@
     function saveState(){
       try{
         const hero = {
-          atk: document.getElementById("hero-atk").value,
-          int: document.getElementById("hero-int").value,
-          spd: document.getElementById("hero-spd").value,
-          analysisBook: document.getElementById("analysis-book").value,
-          analysisBookAdvanced: document.getElementById("analysis-book-advanced").value
+          atk: normalizeFormattedNonNegIntValue(document.getElementById("hero-atk").value, 0),
+          int: normalizeFormattedNonNegIntValue(document.getElementById("hero-int").value, 0),
+          spd: normalizeFormattedNonNegIntValue(document.getElementById("hero-spd").value, 0),
+          analysisBook: normalizeFormattedNonNegIntValue(document.getElementById("analysis-book").value, 0),
+          analysisBookAdvanced: normalizeFormattedNonNegIntValue(document.getElementById("analysis-book-advanced").value, 0)
         };
         const st = {
           monster_id: picked ? picked.id : "",
@@ -514,7 +556,9 @@
             const el = document.getElementById(id);
             if (!el) return;
             const v = st.hero[map[id]];
-            if (v !== undefined && v !== null) el.value = String(v);
+            if (v !== undefined && v !== null) {
+              el.value = formatIntString(v);
+            }
           });
         }
 
@@ -557,7 +601,7 @@
         btn.textContent = String(lv);
         btn.addEventListener("click", () => {
           currentLv = lv;
-          lvInput.value = String(lv);
+          lvInput.value = formatIntString(lv);
           enemyScaled = buildEnemyScaled(picked, currentLv, state);
           saveState();
         });
@@ -570,7 +614,7 @@
         selectedBox.hidden = true;
         selectedName.textContent = "";
         lvInput.disabled = true;
-        lvInput.value = String(currentLv);
+        lvInput.value = formatIntString(currentLv);
         shortcutWrap.innerHTML = "";
         enemyScaled = null;
         setCalcEnabled();
@@ -580,7 +624,7 @@
       selectedName.textContent = picked.title;
       selectedBox.hidden = false;
       lvInput.disabled = false;
-      lvInput.value = String(currentLv);
+      lvInput.value = formatIntString(currentLv);
 
       renderShortcuts(picked.level_shortcuts);
 
@@ -612,7 +656,7 @@
       selectedBox.hidden = true;
       selectedName.textContent = "";
       lvInput.disabled = true;
-      lvInput.value = String(currentLv);
+      lvInput.value = formatIntString(currentLv);
       shortcutWrap.innerHTML = "";
       saveState();
       setCalcEnabled();
@@ -633,23 +677,17 @@
     }
 
     function getHeroInts(){
-      const atk = Math.floor(Number(document.getElementById("hero-atk").value));
-      const intl = Math.floor(Number(document.getElementById("hero-int").value));
-      const spd = Math.floor(Number(document.getElementById("hero-spd").value));
-      const analysisBook = Math.floor(Number(document.getElementById("analysis-book").value));
-      const analysisBookAdvanced = Math.floor(Number(document.getElementById("analysis-book-advanced").value));
-
       return {
-        atk: Number.isFinite(atk) ? Math.max(0, atk) : 0,
-        int: Number.isFinite(intl) ? Math.max(0, intl) : 0,
-        spd: Number.isFinite(spd) ? Math.max(0, spd) : 0,
-        analysisBook: Number.isFinite(analysisBook) ? Math.max(0, analysisBook) : 0,
-        analysisBookAdvanced: Number.isFinite(analysisBookAdvanced) ? Math.max(0, analysisBookAdvanced) : 0
+        atk: Math.max(0, parseFormattedInt(document.getElementById("hero-atk"), 0)),
+        int: Math.max(0, parseFormattedInt(document.getElementById("hero-int"), 0)),
+        spd: Math.max(0, parseFormattedInt(document.getElementById("hero-spd"), 0)),
+        analysisBook: Math.max(0, parseFormattedInt(document.getElementById("analysis-book"), 0)),
+        analysisBookAdvanced: Math.max(0, parseFormattedInt(document.getElementById("analysis-book-advanced"), 0))
       };
     }
 
     loadState();
-    lvInput.value = String(currentLv);
+    lvInput.value = formatIntString(currentLv);
     applyModeUI();
     setCalcEnabled();
 
