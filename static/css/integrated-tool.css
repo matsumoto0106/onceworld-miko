@@ -37,6 +37,7 @@
   flex-direction:row !important;
   align-items:center !important;
   gap:10px !important;
+  min-width:0;
 }
 
 .hero-top-row + .hero-top-row,
@@ -109,6 +110,17 @@
   flex:1 1 auto !important;
   width:auto !important;
   min-width:0 !important;
+}
+
+/* 長い項目名は広く使う */
+#analysis-book-row,
+#analysis-book-advanced-row{
+  grid-column:1 / -1;
+}
+
+#analysis-book-advanced-row .hero-label{
+  min-width:140px;
+  flex:0 0 140px;
 }
 
 .mode-panels{
@@ -313,6 +325,11 @@
 
   .hero-grid{
     grid-template-columns:repeat(3, minmax(0, 1fr));
+  }
+
+  #analysis-book-row,
+  #analysis-book-advanced-row{
+    grid-column:span 2;
   }
 
   .action-row{
